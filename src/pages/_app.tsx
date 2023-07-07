@@ -1,8 +1,8 @@
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
-import { api } from "@/components/utils/api";
-import "@/components/styles/globals.css";
+import { api } from "@/utils/api";
+import "@/styles/globals.css";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -15,4 +15,5 @@ const MyApp: AppType<{ session: Session | null }> = ({
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 export default api.withTRPC(MyApp);

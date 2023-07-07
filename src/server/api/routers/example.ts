@@ -1,9 +1,6 @@
 import { z } from "zod";
-import {
-  createTRPCRouter,
-  publicProcedure,
-  protectedProcedure,
-} from "@/components/server/api/trpc";
+
+import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 
 export const exampleRouter = createTRPCRouter({
   hello: publicProcedure
@@ -15,7 +12,8 @@ export const exampleRouter = createTRPCRouter({
     }),
 
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.example.findMany();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+    return ctx.prisma.user.findMany();
   }),
 
   getSecretMessage: protectedProcedure.query(() => {
