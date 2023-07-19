@@ -1,7 +1,6 @@
 import { signOut, signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 export function MainNav({
@@ -12,9 +11,9 @@ export function MainNav({
   const user = session.data?.user;
 
   return (
-    <div className="mx-auto max-w-screen-xl">
-      <nav>
-        <div className="flex h-14 items-center justify-between space-x-4 lg:space-x-6">
+    <div className="mx-8 flex justify-center">
+      <nav className="w-full px-0">
+        <div className="flex h-14 w-full items-center justify-between space-x-4 lg:space-x-6">
           {/* primary nav */}
           <div className="flex space-x-4 lg:space-x-6">
             <Link
