@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard,
-  Home,
   Users,
   Star,
-  MessageSquare,
   UserCircle2,
+  Kanban,
 } from "lucide-react";
 
 export function Sidebar() {
@@ -17,20 +16,16 @@ export function Sidebar() {
           Dashboard
         </Button>
         <Button variant="ghost" className="justify-start">
-          <Home />
-          Property
+          <Users />
+          Users
         </Button>
         <Button variant="ghost" className="justify-start">
-          <Users />
-          Agent
+          <Kanban />
+          Tickets
         </Button>
         <Button variant="ghost" className="justify-start">
           <Star />
-          Review
-        </Button>
-        <Button variant="ghost" className="justify-start">
-          <MessageSquare />
-          Message
+          Projects?
         </Button>
         <Button variant="ghost" className="justify-start">
           <UserCircle2 />

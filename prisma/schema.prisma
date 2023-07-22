@@ -2,14 +2,13 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["jsonProtocol"]
+    provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
-    directUrl = env("DIRECT_URL")
+    provider     = "postgresql"
+    url          = env("DATABASE_URL")
+    directUrl    = env("DIRECT_URL")
     relationMode = "prisma"
 }
 
@@ -61,8 +60,18 @@ model User {
     sessions      Session[]
 
     //non Next-Auth
-    tickets       Ticket[]
+    tickets Ticket[]
+    role    String
 }
+
+// model Role {
+//     id     String @id @default(cuid())
+//     role_title   String
+//     userId String 
+//     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+//     @@index([userId])
+// }
 
 model Ticket {
     id        String   @id @default(cuid())

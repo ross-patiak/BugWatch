@@ -15,7 +15,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <Head>
-        <title>Home Finder</title>
+        <title>Bug Watchr</title>
         <meta
           name="description"
           content="This is a Bug Ticket Tracking Application"
