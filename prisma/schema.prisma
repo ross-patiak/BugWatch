@@ -61,17 +61,8 @@ model User {
 
     //non Next-Auth
     tickets Ticket[]
-    role    String
+    role    Role     @default(ADMIN)
 }
-
-// model Role {
-//     id     String @id @default(cuid())
-//     role_title   String
-//     userId String 
-//     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-//     @@index([userId])
-// }
 
 model Ticket {
     id        String   @id @default(cuid())
@@ -83,4 +74,9 @@ model Ticket {
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@index([userId])
+}
+
+enum Role {
+    USER
+    ADMIN
 }
