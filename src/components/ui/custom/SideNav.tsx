@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   LayoutDashboard,
   Users,
@@ -6,23 +6,35 @@ import {
   UserCircle2,
   Kanban,
 } from "lucide-react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
-export function Sidebar() {
+export function SideNav() {
   return (
     <nav className="sticky top-0 px-4 py-6">
       <div className="flex w-[250px] flex-col space-y-1">
-        <Button variant="secondary" className="justify-start">
+        <Link
+          className={cn(buttonVariants({ variant: "ghost" }), "justify-start")}
+          href="/"
+        >
           <LayoutDashboard />
           Dashboard
-        </Button>
-        <Button variant="ghost" className="justify-start">
+        </Link>
+        <Link
+          className={cn(buttonVariants({ variant: "ghost" }), "justify-start")}
+          href="/tickets"
+        >
           <Users />
           Users
-        </Button>
-        <Button variant="ghost" className="justify-start">
+        </Link>
+
+        <Link
+          className={cn(buttonVariants({ variant: "ghost" }), "justify-start")}
+          href="/tickets"
+        >
           <Kanban />
           Tickets
-        </Button>
+        </Link>
         <Button variant="ghost" className="justify-start">
           <Star />
           Projects?

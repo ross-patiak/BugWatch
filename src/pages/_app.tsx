@@ -6,7 +6,7 @@ import "@/styles/globals.css";
 import Head from "next/head";
 import { ThemeProvider } from "@/components/ui/custom/ThemeProvider";
 import { MainNav } from "@/components/ui/custom/MainNav";
-import { Sidebar } from "@/components/ui/custom/SideNav";
+import { SideNav } from "@/components/ui/custom/SideNav";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -27,7 +27,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <MainNav></MainNav>
 
         <div className="flex items-start">
-          <Sidebar></Sidebar>
+          <SideNav></SideNav>
 
           <div className="min-h-screen flex-grow border-x-white">
             <Component {...pageProps} />
