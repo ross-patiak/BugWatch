@@ -57,10 +57,17 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+}
+
+model Employee {
+    id    String  @id @default(cuid())
+    name  String?
+    email String? @unique
+    image String?
 
     //non Next-Auth
     tickets Ticket[]
-    role    Role     @default(ADMIN)
+    role    Role     @default(DEVELOPER)
 }
 
 model Ticket {
@@ -70,12 +77,12 @@ model Ticket {
     content   String?
     createdAt DateTime @default(now())
 
-    user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+    employee Employee? @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@index([userId])
 }
 
 enum Role {
-    USER
-    ADMIN
+    DEVELOPER
+    PROJECT_MANAGER
 }
