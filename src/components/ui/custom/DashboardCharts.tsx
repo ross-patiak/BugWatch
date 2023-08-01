@@ -14,7 +14,7 @@ const plotOptions: ApexPlotOptions = {
 
 const DashboardCharts = () => {
   return (
-    <div className="flex flex-row flex-wrap items-center justify-between gap-6">
+    <div className="flex-rpw flex flex-wrap items-center justify-between gap-6">
       <div className="flex grow flex-col rounded-2xl bg-[#1A1D1F] px-[22px] py-6">
         <div className="text-[#6F767E]">Opened Today</div>
         <div className="flex">
