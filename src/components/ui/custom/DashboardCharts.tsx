@@ -20,7 +20,8 @@ const DashboardCharts = () => {
         <div className="flex">
           <div>684</div>
 
-          {/* <ReactApexChart
+          {/* 
+          <ReactApexChart
             options={{
               plotOptions,
               chart: { type: "donut" },
@@ -34,7 +35,8 @@ const DashboardCharts = () => {
             series={[75, 25]}
             type="donut"
             width="120px"
-          /> */}
+          /> 
+          */}
         </div>
       </div>
 
