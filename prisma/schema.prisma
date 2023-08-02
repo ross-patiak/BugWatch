@@ -60,29 +60,24 @@ model User {
 }
 
 model Employee {
-    id    String  @id @default(cuid())
-    name  String?
-    email String? @unique
-    image String?
+    id       String  @id @default(cuid())
+    name     String?
+    email    String? @unique
+    image    String?
+    userRole String  @default("DEVELOPER")
 
     //non Next-Auth
     tickets Ticket[]
-    role    Role     @default(DEVELOPER)
 }
 
 model Ticket {
-    id        String   @id @default(cuid())
-    userId    String
-    title     String?
-    content   String?
-    createdAt DateTime @default(now())
+    id         String   @id @default(cuid())
+    employeeId String
+    title      String?
+    content    String?
+    createdAt  DateTime @default(now())
 
-    employee Employee? @relation(fields: [userId], references: [id], onDelete: Cascade)
+    employee Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 
-    @@index([userId])
-}
-
-enum Role {
-    DEVELOPER
-    PROJECT_MANAGER
+    @@index([employeeId])
 }
