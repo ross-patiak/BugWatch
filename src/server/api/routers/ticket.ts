@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const ticketRouter = createTRPCRouter({
   create: protectedProcedure
@@ -7,11 +7,12 @@ export const ticketRouter = createTRPCRouter({
       z.object({
         title: z.string(),
         content: z.string(),
+        employeeId: z.string(),
       })
     )
-    .mutation(async ({ input: { title, content }, ctx }) => {
+    .mutation(async ({ input: { title, content, employeeId }, ctx }) => {
       const ticket = await ctx.prisma.ticket.create({
-        data: { title, content, userId: ctx.session.user.id },
+        data: { title, content, employeeId },
       });
 
       return ticket;
