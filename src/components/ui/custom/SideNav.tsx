@@ -22,7 +22,7 @@ export function SideNav() {
         </Link>
         <Link
           className={cn(buttonVariants({ variant: "ghost" }), "justify-start")}
-          href="/tickets"
+          href="/users"
         >
           <Users />
           Users

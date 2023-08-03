@@ -69,14 +69,16 @@ const data: Payment[] = [
   },
 ];
 
-export type Payment = {
+//type to check against the columns
+type Payment = {
   id: string;
   amount: number;
   status: "pending" | "processing" | "success" | "failed";
   email: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+//define columns
+const columns: ColumnDef<Payment>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -164,6 +166,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
+//show table
 export function TicketList() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
