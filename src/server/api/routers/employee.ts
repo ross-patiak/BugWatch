@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const employeeRouter = createTRPCRouter({
   create: protectedProcedure
@@ -17,5 +17,21 @@ export const employeeRouter = createTRPCRouter({
       });
 
       return employee;
+    }),
+
+  getEmployees: protectedProcedure
+    // .input(
+    //   z.object({
+    //     limit: z.number().optional(),
+    //   })
+    // )
+    .query(async ({ ctx }) => {
+      //query comes from trpc/react query
+      //notice return
+      return await ctx.prisma.employee.findMany({
+        //TODO: maybe change the default orderBy (maybe by name but u gotta parse last names on the frontend before passing it to the back i think)
+        // take: limit + 1, //take is a prisma attr from this object that is = to LIMIT keyword in SQL
+        orderBy: { userRole: "desc" },
+      });
     }),
 });

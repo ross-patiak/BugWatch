@@ -8,20 +8,31 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectGroup,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { type FormEvent, useRef } from "react";
+import { type FormEvent, useRef, useState } from "react";
 import { api } from "@/utils/api";
+import { type Employee } from "@prisma/client";
 
 type ButtonProps = {
   className?: string;
+  employeeData: Employee[];
 };
 
-const CreateTicketButton = ({ className = "" }: ButtonProps) => {
+const CreateTicketButton = ({ className = "", employeeData }: ButtonProps) => {
   const titleRef = useRef<HTMLInputElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
+  const [employee, setEmployee] = useState("");
 
   const createTicket = api.ticket.create.useMutation();
 
@@ -31,6 +42,7 @@ const CreateTicketButton = ({ className = "" }: ButtonProps) => {
     createTicket.mutate({
       title: titleRef.current?.value as string,
       content: bodyRef.current?.value as string,
+      employeeId: employee,
     });
   };
 
@@ -67,6 +79,29 @@ const CreateTicketButton = ({ className = "" }: ButtonProps) => {
                 id="description"
                 ref={bodyRef}
               />
+            </div>
+
+            <div className="grid w-full gap-1.5">
+              <Label htmlFor="role">Assign To</Label>
+              <Select onValueChange={(val) => setEmployee(val)}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Unassigned" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {employeeData.length > 0 ? (
+                      employeeData?.map((employee: Employee) => (
+                        //link by ID; explain {} v () in arrow funcs
+                        <SelectItem key={employee.id} value={employee.id}>
+                          {employee.name}
+                        </SelectItem>
+                      ))
+                    ) : (
+                      <SelectItem value="NO_USERS">No users found</SelectItem>
+                    )}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <DialogFooter>
