@@ -89,7 +89,7 @@ const CreateTicketButton = ({ className = "", employeeData }: ButtonProps) => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    {employeeData.length > 0 ? (
+                    {employeeData?.length > 0 ? (
                       employeeData?.map((employee: Employee) => (
                         //link by ID; explain {} v () in arrow funcs
                         <SelectItem key={employee.id} value={employee.id}>
