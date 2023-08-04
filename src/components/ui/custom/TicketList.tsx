@@ -105,6 +105,8 @@ const columns: ColumnDef<Payment>[] = [
       <div className="capitalize">{row.getValue("status")}</div>
     ),
   },
+
+  //! SEE HOW row.getValue just makes sense? Nothing in the table shows how data is displayed (not like drop list)
   {
     accessorKey: "email",
     header: ({ column }) => {
