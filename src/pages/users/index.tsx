@@ -13,7 +13,9 @@ const UsersPage: NextPage = () => {
   return (
     <div className="flex">
       <CreateUserButton className="self-end" />
-      <EmployeesList data={data} columns={employeeListColumns} />
+      {data ? (
+        <EmployeesList data={data} columns={employeeListColumns} />
+      ) : null}
     </div>
   );
 };
