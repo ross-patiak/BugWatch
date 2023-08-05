@@ -2,6 +2,13 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const ticketRouter = createTRPCRouter({
+  getTickets: protectedProcedure
+    .query(async ({ctx}) => {
+      return await ctx.prisma.ticket.findMany({
+        orderBy: {title : "desc"}
+      })
+    }),
+
   create: protectedProcedure
     .input(
       z.object({
