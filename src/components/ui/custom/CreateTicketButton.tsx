@@ -83,7 +83,7 @@ const CreateTicketButton = ({ className = "", employeeData }: ButtonProps) => {
 
             <div className="grid w-full gap-1.5">
               <Label htmlFor="role">Assign To</Label>
-              <Select onValueChange={(val) => setEmployee(val)}>
+              <Select onValueChange={(val: string) => setEmployee(val)}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Unassigned" />
                 </SelectTrigger>

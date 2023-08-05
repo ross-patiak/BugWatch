@@ -92,7 +92,7 @@ const CreateUserButton = ({ className = "" }: ButtonProps) => {
             </div>
             <div className="grid w-full gap-1.5">
               <Label htmlFor="role">Role</Label>
-              <Select onValueChange={(val) => setRole(val)}>
+              <Select onValueChange={(val: string) => setRole(val)}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Select user role" />
                 </SelectTrigger>
