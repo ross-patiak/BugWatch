@@ -1,19 +1,25 @@
 import CreateTicketButton from "@/components/ui/custom/CreateTicketButton";
-import { TicketList } from "@/components/ui/custom/TicketList";
+import TicketsList from "@/components/ui/custom/TicketList";
 import { api } from "@/utils/api";
+import { type Ticket } from "@prisma/client";
+import { ticketListColumns } from "@/components/ui/custom/tables/columns";
 import { type Employee } from "@prisma/client";
 
 import { type NextPage } from "next";
 
 const TicketsPage: NextPage = () => {
+  const getTickets = api.ticket.getTickets.useQuery();
+  const data: Ticket[] = getTickets.data as Ticket[];
   const getEmployees = api.employee.getEmployees.useQuery();
-  const data: Employee[] = getEmployees.data as Employee[];
+  const edata: Employee[] = getEmployees.data as Employee[];
   //TODO: make title, content, etc required/optional
   //TODO: add reassign ticket functionality
   return (
     <div className="flex">
-      <CreateTicketButton className="self-end" employeeData={data} />
-      <TicketList></TicketList>
+      <CreateTicketButton className="self-end" employeeData={edata} />
+      {data ? (
+        <TicketsList data={data} columns={ticketListColumns}></TicketsList>
+      ) : null}
     </div>
   );
 };
