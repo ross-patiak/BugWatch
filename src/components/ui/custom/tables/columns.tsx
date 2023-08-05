@@ -49,13 +49,18 @@ export const employeeListColumns: ColumnDef<Employee>[] = [
   },
 ];
 
+// interface FinalTicket extends Ticket {
+//   employee: Employee;
+// }
+
 export const ticketListColumns: ColumnDef<Ticket>[] = [
   {
-    accessorKey: "employeeId",
-    header: "EmployeeId",
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("employeeId")}</div>
-    ),
+    accessorKey: "employee",
+    header: "Name",
+    cell: ({ row }) => {
+      console.log(row);
+      return <div className="lowercase">{row.getValue("employee").name}</div>;
+    },
   },
   {
     accessorKey: "title",
