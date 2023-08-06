@@ -43,6 +43,11 @@ import { type ColumnDef, getCoreRowModel } from "@tanstack/react-table";
 
 import { type Ticket } from "@prisma/client";
 import { DataTable } from "./tables/DataTable";
+import { type Employee } from "@prisma/client";
+
+// interface FinalTicket extends Ticket {
+//   employee: Employee;
+// }
 
 type TicketsListProps = {
   data: Ticket[];

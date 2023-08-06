@@ -4,7 +4,16 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 export const ticketRouter = createTRPCRouter({
   getTickets: protectedProcedure
     .query(async ({ctx}) => {
+
       return await ctx.prisma.ticket.findMany({
+        include: {
+          employee: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
         orderBy: {title : "desc"}
       })
     }),
