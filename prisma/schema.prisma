@@ -75,6 +75,7 @@ model Ticket {
     employeeId String?
     title      String?
     content    String?
+    status     String?  @default("open")
     createdAt  DateTime @default(now())
 
     employee Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)

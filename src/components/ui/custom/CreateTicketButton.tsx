@@ -33,6 +33,7 @@ const CreateTicketButton = ({ className = "", employeeData }: ButtonProps) => {
   const titleRef = useRef<HTMLInputElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
   const [employee, setEmployee] = useState("");
+  const [status, setStatus] = useState("open");
 
   const createTicket = api.ticket.create.useMutation();
 
@@ -43,6 +44,7 @@ const CreateTicketButton = ({ className = "", employeeData }: ButtonProps) => {
       title: titleRef.current?.value as string,
       content: bodyRef.current?.value as string,
       employeeId: employee,
+      status: status,
     });
   };
 
@@ -99,6 +101,25 @@ const CreateTicketButton = ({ className = "", employeeData }: ButtonProps) => {
                     ) : (
                       <SelectItem value="NO_USERS">No users found</SelectItem>
                     )}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="grid w-full gap-1.5">
+              <Label htmlFor="role">Status</Label>
+              <Select
+                defaultValue={"open"}
+                onValueChange={(val: string) => setStatus(val)}
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Unassigned" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="open">Open</SelectItem>
+                    <SelectItem value="in_progress">In Progress</SelectItem>
+                    <SelectItem value="closed">Closed</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>

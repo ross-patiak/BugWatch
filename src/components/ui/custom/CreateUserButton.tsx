@@ -60,12 +60,12 @@ const CreateUserButton = ({ className = "" }: ButtonProps) => {
     <div className={`flex-end ${className}`}>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline">Create User</Button>
+          <Button variant="outline">Add User</Button>
         </DialogTrigger>
 
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Create User</DialogTitle>
+            <DialogTitle>Add User</DialogTitle>
             <DialogDescription>
               Enter user details here. Click create when you are done.
             </DialogDescription>
