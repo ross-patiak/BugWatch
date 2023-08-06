@@ -4,6 +4,7 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { type Employee } from "@prisma/client";
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 import { type Ticket } from "@prisma/client";
 import { api } from "@/utils/api";
@@ -18,6 +19,27 @@ import { api } from "@/utils/api";
 
 export const employeeListColumns: ColumnDef<Employee>[] = [
   {
+    accessorKey: "image",
+    header: "Picture",
+    cell: ({ row }) => {
+      return (
+        <div className="lowercase">
+          <Image
+            src={row.getValue("image")}
+            width={50}
+            height={50}
+            alt="Picture of the author"
+          ></Image>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "name",
+    header: "Name",
+    cell: ({ row }) => <div className="lowercase">{row.getValue("name")}</div>,
+  },
+  {
     accessorKey: "email",
     header: ({ column }) => {
       return (
@@ -31,6 +53,13 @@ export const employeeListColumns: ColumnDef<Employee>[] = [
       );
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+  },
+  {
+    accessorKey: "userRole",
+    header: "Role",
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("userRole")}</div>
+    ),
   },
 ];
 
