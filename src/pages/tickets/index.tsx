@@ -7,9 +7,13 @@ import { type Employee } from "@prisma/client";
 
 import { type NextPage } from "next";
 
+interface Ticket2 extends Ticket {
+  employee: Employee;
+}
+
 const TicketsPage: NextPage = () => {
   const getTickets = api.ticket.getTickets.useQuery();
-  const data: Ticket[] = getTickets.data as Ticket[];
+  const data: Ticket2[] = getTickets.data as Ticket2[];
   const getEmployees = api.employee.getEmployees.useQuery();
   const edata: Employee[] = getEmployees.data as Employee[];
   //TODO: make title, content, etc required/optional
