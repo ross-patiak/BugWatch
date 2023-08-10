@@ -95,7 +95,7 @@ const DashboardCard = ({ type }: DashboardCardProps) => {
     ));
 
     res = (
-      <div className="flex flex-col rounded-[10px] bg-[#1A1D1F] px-5 pb-[5px] pt-5">
+      <div className="flex flex-col rounded-[10px] px-5 pb-[5px] pt-5">
         <div className="flex justify-between">
           <div>Top Agents</div>
           <Link
@@ -143,7 +143,7 @@ const DashboardCard = ({ type }: DashboardCardProps) => {
     ));
 
     res = (
-      <div className="flex flex-col rounded-[10px] bg-[#1A1D1F] px-5 pb-[5px] pt-5">
+      <div className="flex flex-col rounded-[10px] px-5 pb-[5px] pt-5">
         <div>Customer</div>
         <div className="flex flex-col">{dataEntryView}</div>
       </div>
@@ -189,7 +189,7 @@ const DashboardCard = ({ type }: DashboardCardProps) => {
     ));
 
     res = (
-      <div className="flex flex-col rounded-[10px] bg-[#1A1D1F] px-5 pb-[5px] pt-5">
+      <div className="flex flex-col rounded-[10px] px-5 pb-[5px] pt-5">
         <div className="flex justify-between">
           <div>Latest Sales</div>
           <MoveRight />
