@@ -18,8 +18,21 @@ const numTicketsByStatus = (tstatus: string) => {
   const openStatusCount = api.ticket.getTicketsByStatus.useQuery({
     status: tstatus,
   });
-  const data: number = openStatusCount.data as number;
-  return data;
+  const data: Ticket[] = openStatusCount.data as Ticket[];
+
+  const today: string = new Date().toLocaleDateString();
+
+  if (tstatus == "closed") {
+    let counter = 0;
+    for (let i = 0; i < data?.length; i++) {
+      if (data[i]?.statusUpdatedAt == today) {
+        counter++;
+      }
+    }
+    return counter;
+  } else {
+    return data?.length;
+  }
 };
 
 const numTicketsByEmployee = (employeeId: string) => {
@@ -64,7 +77,7 @@ const TopRowAnalytics = () => {
       <div className="flex grow flex-col rounded-2xl bg-[#1A1D1F] px-[22px] py-6">
         <div className="text-[#6F767E]">Closed Today</div>
         <div className="flex">
-          <div>62420</div> {/* implement this after closed time is created */}
+          <div>{numTicketsByStatus("closed")}</div>
         </div>
       </div>
 
