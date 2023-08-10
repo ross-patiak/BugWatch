@@ -24,7 +24,7 @@ export const ticketRouter = createTRPCRouter({
       })
     )
     .query( async ({input: { status }, ctx }) => {
-      return await ctx.prisma.ticket.count({
+      return await ctx.prisma.ticket.findMany({
         where:{
           status: status
         },
@@ -70,12 +70,13 @@ export const ticketRouter = createTRPCRouter({
         content: z.string(),
         employeeId: z.string(),
         status: z.string(),
+        statusUpdatedAt: z.string(),
       })
     )
     .mutation(
-      async ({ input: { title, content, employeeId, status}, ctx }) => {
+      async ({ input: { title, content, employeeId, status, statusUpdatedAt}, ctx }) => {
         const ticket = await ctx.prisma.ticket.create({
-          data: { title, content, employeeId, status},
+          data: { title, content, employeeId, status, statusUpdatedAt},
         });
 
         return ticket;

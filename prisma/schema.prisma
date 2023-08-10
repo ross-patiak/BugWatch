@@ -65,14 +65,14 @@ model Employee {
 }
 
 model Ticket {
-  id         String    @id @default(cuid())
-  employeeId String?
-  title      String?
-  content    String?
-  createdAt  DateTime  @default(now())
-  status     String?   @default("open")
-  employee   Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  updatedAt  DateTime  @updatedAt
+  id              String    @id @default(cuid())
+  employeeId      String?
+  title           String?
+  content         String?
+  createdAt       DateTime  @default(now())
+  status          String?   @default("open")
+  employee        Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  statusUpdatedAt String?
 
   @@index([employeeId])
 }

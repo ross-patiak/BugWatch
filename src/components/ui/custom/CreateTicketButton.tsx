@@ -39,12 +39,12 @@ const CreateTicketButton = ({ className = "", employeeData }: ButtonProps) => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
     createTicket.mutate({
       title: titleRef.current?.value as string,
       content: bodyRef.current?.value as string,
       employeeId: employee,
       status: status,
+      statusUpdatedAt: new Date().toLocaleDateString(),
     });
   };
 
