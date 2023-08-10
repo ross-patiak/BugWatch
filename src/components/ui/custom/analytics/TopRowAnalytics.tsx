@@ -1,4 +1,6 @@
 import dynamic from "next/dynamic";
+import { api } from "@/utils/api";
+import { type Ticket } from "@prisma/client";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
@@ -12,13 +14,32 @@ const plotOptions: ApexPlotOptions = {
   },
 };
 
-const DashboardCharts = () => {
+const numTicketsByStatus = (tstatus: string) => {
+  const openStatusCount = api.ticket.getTicketsByStatus.useQuery({
+    status: tstatus,
+  });
+  const data: number = openStatusCount.data as number;
+  return data;
+};
+
+const numTicketsByEmployee = (employeeId: string) => {
+  const numTicketsByEmployee = api.ticket.getTicketsByEmployee.useQuery({
+    employee: employeeId,
+  });
+  const data: Ticket[] = numTicketsByEmployee.data as Ticket[];
+  return data?.length;
+};
+
+// const numTicketsClosedToday = () => {
+//   const numTicketClosedToday
+// }
+const TopRowAnalytics = () => {
   return (
     <div className="flex-rpw flex flex-wrap items-center justify-between gap-6">
       <div className="flex grow flex-col rounded-2xl bg-[#1A1D1F] px-[22px] py-6">
-        <div className="text-[#6F767E]">Opened Today</div>
+        <div className="text-[#6F767E]">Currently Open</div>
         <div className="flex">
-          <div>684</div>
+          <div>{numTicketsByStatus("open")}</div>
 
           {/* 
           <ReactApexChart
@@ -43,25 +64,25 @@ const DashboardCharts = () => {
       <div className="flex grow flex-col rounded-2xl bg-[#1A1D1F] px-[22px] py-6">
         <div className="text-[#6F767E]">Closed Today</div>
         <div className="flex">
-          <div>684</div>
+          <div>62420</div> {/* implement this after closed time is created */}
         </div>
       </div>
 
       <div className="flex grow flex-col rounded-2xl bg-[#1A1D1F] px-[22px] py-6">
         <div className="text-[#6F767E]">In Progress</div>
         <div className="flex">
-          <div>684</div>
+          <div>{numTicketsByStatus("in_progress")}</div>
         </div>
       </div>
 
       <div className="flex grow flex-col rounded-2xl bg-[#1A1D1F] px-[22px] py-6">
         <div className="text-[#6F767E]">Unassigned</div>
         <div className="flex">
-          <div>684</div>
+          <div>{numTicketsByEmployee("")}</div>
         </div>
       </div>
     </div>
   );
 };
 
-export default DashboardCharts;
+export default TopRowAnalytics;
