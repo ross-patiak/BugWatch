@@ -77,13 +77,13 @@ export const ticketListColumns: ColumnDef<Ticket>[] = [
       return (
         <div className="flex">
           <Image
-            src={employee.image as string}
+            src={employee?.image as string}
             width={50}
             height={50}
             alt="Profile pic of this user"
             priority={true}
           ></Image>
-          <div>{employee.name}</div>
+          <div>{employee?.name}</div>
         </div>
       );
     },
