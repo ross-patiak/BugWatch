@@ -17,7 +17,13 @@ const EmployeesList = ({ data, columns }: EmployeesListProps) => {
     getCoreRowModel: getCoreRowModel(),
   };
 
-  return <DataTable tableParams={tableParams} columns={columns}></DataTable>;
+  return (
+    <DataTable
+      tableParams={tableParams}
+      columns={columns}
+      type="users"
+    ></DataTable>
+  );
 };
 
 export default EmployeesList;

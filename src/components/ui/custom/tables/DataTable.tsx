@@ -15,15 +15,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import EmployeesTableRow from "@/components/ui/custom/tables/EmployeesTableRow";
+import TicketsTableRow from "@/components/ui/custom/tables/TicketsTableRow";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   tableParams: TableOptions<TData>;
+  type: "tickets" | "users";
 }
 
 export function DataTable<TData, TValue>({
   columns,
   tableParams,
+  type,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable(tableParams);
 
@@ -50,18 +54,15 @@ export function DataTable<TData, TValue>({
         </TableHeader>
         <TableBody>
           {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
+            table
+              .getRowModel()
+              .rows.map((row) =>
+                type === "users" ? (
+                  <EmployeesTableRow key={row.id} row={row} />
+                ) : (
+                  <TicketsTableRow key={row.id} row={row} />
+                )
+              )
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
