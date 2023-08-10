@@ -4,30 +4,27 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { type Employee, type Ticket } from "@prisma/client";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Link from "next/link";
+import { DialogTrigger } from "@radix-ui/react-dialog";
 
 export const employeeListColumns: ColumnDef<Employee>[] = [
   {
-    accessorKey: "image",
-    header: "",
+    accessorKey: "name",
+    header: "Name",
     cell: ({ row }) => {
+      const { id, image, name } = row.original;
+
       return (
-        <div>
-          <Image
-            src={row.getValue("image")}
-            width={50}
-            height={50}
-            alt="Profile pic of this user"
-            priority={true}
-          ></Image>
+        <div className="flex">
+          <Avatar>
+            <AvatarImage src={image as string} alt="Profile pic of this user" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <Link href={`/users/${id}`}>{name}</Link>
         </div>
       );
     },
-  },
-  {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
   {
     accessorKey: "email",
@@ -48,6 +45,10 @@ export const employeeListColumns: ColumnDef<Employee>[] = [
     accessorKey: "userRole",
     header: "Role",
     cell: ({ row }) => <div>{row.getValue("userRole")}</div>,
+  },
+  {
+    header: " ",
+    cell: () => <DialogTrigger>View Details</DialogTrigger>,
   },
 ];
 
@@ -76,16 +77,20 @@ export const ticketListColumns: ColumnDef<Ticket>[] = [
       const employee: Employee = row.getValue("employee");
       return (
         <div className="flex">
-          <Image
-            src={employee.image as string}
-            width={50}
-            height={50}
-            alt="Profile pic of this user"
-            priority={true}
-          ></Image>
-          <div>{employee.name}</div>
+          <Avatar>
+            <AvatarImage
+              src={employee?.image as string}
+              alt="Profile pic of this user"
+            />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <div>{employee?.name}</div>
         </div>
       );
     },
+  },
+  {
+    header: " ",
+    cell: () => <DialogTrigger>View Details</DialogTrigger>,
   },
 ];

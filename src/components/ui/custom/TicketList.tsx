@@ -16,7 +16,13 @@ const TicketsList = ({ data, columns }: TicketsListProps) => {
     getCoreRowModel: getCoreRowModel(),
   };
 
-  return <DataTable tableParams={tableParams} columns={columns}></DataTable>;
+  return (
+    <DataTable
+      tableParams={tableParams}
+      columns={columns}
+      type="tickets"
+    ></DataTable>
+  );
 };
 
 export default TicketsList;
