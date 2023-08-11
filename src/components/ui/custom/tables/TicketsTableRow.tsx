@@ -3,8 +3,6 @@
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Slot } from "@radix-ui/react-slot";
 
 import {
   Dialog,
@@ -12,8 +10,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
-  DialogClose,
 } from "@/components/ui/dialog";
 import { flexRender, type Row } from "@tanstack/react-table";
 

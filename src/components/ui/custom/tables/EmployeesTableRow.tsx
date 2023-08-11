@@ -7,6 +7,7 @@ import { flexRender, type Row } from "@tanstack/react-table";
 import EmployeeDetails from "@/components/ui/custom/EmployeeDetails";
 
 type employeesTableRowProps = {
+  //eslint-disable-next-line
   row: Row<any>;
 };
 
