@@ -20,30 +20,22 @@ export const employeeRouter = createTRPCRouter({
     }),
 
   getEmployee: protectedProcedure
-    .input(
-      z.object({employeeId: z.string()})
-      )
-    .query(async ({input: {employeeId}, ctx}) => {
+    .input(z.object({ employeeId: z.string() }))
+    .query(async ({ input: { employeeId }, ctx }) => {
       return await ctx.prisma.employee.findUnique({
         where: {
           id: employeeId,
         },
-      })
-    }),
-
-  getEmployees: protectedProcedure
-    // .input(
-    //   z.object({
-    //     limit: z.number().optional(),
-    //   })
-    // )
-    .query(async ({ ctx }) => {
-      //query comes from trpc/react query
-      //notice return
-      return await ctx.prisma.employee.findMany({
-        //TODO: maybe change the default orderBy (maybe by name but u gotta parse last names on the frontend before passing it to the back i think)
-        // take: limit + 1, //take is a prisma attr from this object that is = to LIMIT keyword in SQL
-        orderBy: { userRole: "desc" },
+        include: {
+          tickets: true,
+        },
       });
     }),
+
+  getEmployees: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.employee.findMany({
+      //TODO: maybe change the default orderBy (maybe by name but u gotta parse last names on the frontend before passing it to the back i think)
+      orderBy: { userRole: "desc" },
+    });
+  }),
 });

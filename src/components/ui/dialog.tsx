@@ -34,6 +34,7 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 const DialogClose = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Close>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Close>
+  //eslint-disable-next-line
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Close ref={ref} {...props} />
 ));

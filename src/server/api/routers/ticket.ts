@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { CursorTextIcon } from "@radix-ui/react-icons";
 
 export const ticketRouter = createTRPCRouter({
   getTickets: protectedProcedure.query(async ({ ctx }) => {
@@ -20,13 +19,13 @@ export const ticketRouter = createTRPCRouter({
   getTicketsByStatus: protectedProcedure
     .input(
       z.object({
-      status: z.string()
+        status: z.string(),
       })
     )
-    .query( async ({input: { status }, ctx }) => {
+    .query(async ({ input: { status }, ctx }) => {
       return await ctx.prisma.ticket.findMany({
-        where:{
-          status: status
+        where: {
+          status: status,
         },
       });
     }),
@@ -48,20 +47,13 @@ export const ticketRouter = createTRPCRouter({
   //     });
   //   }),
 
-  getTicketsByEmployee: protectedProcedure
-    .input(
-      z.object({
-        employee: z.string(),
-      })
-    )
-    .query( async ({input: { employee }, ctx }) => {
-      return await ctx.prisma.ticket.findMany({
-        where:{
-          employeeId: employee,
-        },
-      });
-    }),
-    
+  getUnassignedTickets: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.ticket.findMany({
+      where: {
+        employeeId: "",
+      },
+    });
+  }),
 
   create: protectedProcedure
     .input(
@@ -70,13 +62,12 @@ export const ticketRouter = createTRPCRouter({
         content: z.string(),
         employeeId: z.string(),
         status: z.string(),
-        statusUpdatedAt: z.string(),
       })
     )
     .mutation(
-      async ({ input: { title, content, employeeId, status, statusUpdatedAt}, ctx }) => {
+      async ({ input: { title, content, employeeId, status }, ctx }) => {
         const ticket = await ctx.prisma.ticket.create({
-          data: { title, content, employeeId, status, statusUpdatedAt},
+          data: { title, content, employeeId, status },
         });
 
         return ticket;
