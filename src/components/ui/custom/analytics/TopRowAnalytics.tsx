@@ -15,37 +15,48 @@ const plotOptions: ApexPlotOptions = {
 };
 
 const numTicketsByStatus = (tstatus: string) => {
-  const openStatusCount = api.ticket.getTicketsByStatus.useQuery({
+  const ticketsByStatus = api.ticket.getTicketsByStatus.useQuery({
     status: tstatus,
   });
-  const data: Ticket[] = openStatusCount.data as Ticket[];
 
-  const today: string = new Date().toLocaleDateString();
+  const data: Ticket[] = ticketsByStatus?.data as Ticket[];
 
-  if (tstatus == "closed") {
-    let counter = 0;
-    for (let i = 0; i < data?.length; i++) {
-      if (data[i]?.statusUpdatedAt == today) {
-        counter++;
-      }
-    }
-    return counter;
-  } else {
-    return data?.length;
+  if (tstatus === "closed") {
+    const today: string = new Intl.DateTimeFormat("en-US").format(new Date());
+
+    const closedTicketsToday = data?.filter((ticket) => {
+      const ticketDate = new Intl.DateTimeFormat("en-US").format(
+        ticket.statusUpdatedAt
+      );
+
+      return ticketDate === today;
+    });
+
+    return closedTicketsToday?.length;
   }
+
+  return data?.length;
+
+  // if (tstatus == "closed") {
+  //   let counter = 0;
+  //   for (let i = 0; i < data?.length; i++) {
+  //     if (data[i]?.statusUpdatedAt == today) {
+  //       counter++;
+  //     }
+  //   }
+  //   return counter;
+  // } else {
+  //   return data?.length;
+  // }
 };
 
-const numTicketsByEmployee = (employeeId: string) => {
-  const numTicketsByEmployee = api.ticket.getTicketsByEmployee.useQuery({
-    employee: employeeId,
-  });
-  const data: Ticket[] = numTicketsByEmployee.data as Ticket[];
+const numTicketsUnassigned = () => {
+  const unassignedTickets = api.ticket.getUnassignedTickets.useQuery();
+  const data: Ticket[] = unassignedTickets.data as Ticket[];
+
   return data?.length;
 };
 
-// const numTicketsClosedToday = () => {
-//   const numTicketClosedToday
-// }
 const TopRowAnalytics = () => {
   return (
     <div className="flex-rpw flex flex-wrap items-center justify-between gap-6">
@@ -91,7 +102,7 @@ const TopRowAnalytics = () => {
       <div className="flex grow flex-col rounded-2xl bg-[#1A1D1F] px-[22px] py-6">
         <div className="text-[#6F767E]">Unassigned</div>
         <div className="flex">
-          <div>{numTicketsByEmployee("")}</div>
+          <div>{numTicketsUnassigned()}</div>
         </div>
       </div>
     </div>

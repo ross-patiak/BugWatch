@@ -98,8 +98,8 @@ const CreateUserButton = ({ className = "" }: ButtonProps) => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="DEVELOPER">Developer</SelectItem>
-                    <SelectItem value="PROJECT_MANAGER">
+                    <SelectItem value="Developer">Developer</SelectItem>
+                    <SelectItem value="Project Manager">
                       Project Manager
                     </SelectItem>
                   </SelectGroup>

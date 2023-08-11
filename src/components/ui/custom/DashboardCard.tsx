@@ -98,10 +98,7 @@ const DashboardCard = ({ type }: DashboardCardProps) => {
       <div className="flex flex-col rounded-[10px] px-5 pb-[5px] pt-5">
         <div className="flex justify-between">
           <div>Top Agents</div>
-          <Link
-            className={buttonVariants({ variant: "outline" })}
-            href="http://localhost:3000"
-          >
+          <Link className={buttonVariants({ variant: "outline" })} href="/">
             View All
           </Link>
         </div>

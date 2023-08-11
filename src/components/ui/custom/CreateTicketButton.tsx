@@ -44,7 +44,6 @@ const CreateTicketButton = ({ className = "", employeeData }: ButtonProps) => {
       content: bodyRef.current?.value as string,
       employeeId: employee,
       status: status,
-      statusUpdatedAt: new Date().toLocaleDateString(),
     });
   };
 

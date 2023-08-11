@@ -94,3 +94,32 @@ export const ticketListColumns: ColumnDef<Ticket>[] = [
     cell: () => <DialogTrigger>View Details</DialogTrigger>,
   },
 ];
+
+export const assignedTicketsColumns: ColumnDef<Ticket>[] = [
+  {
+    accessorKey: "title",
+    header: "Ticket",
+    cell: ({ row }) => <div>{row.getValue("title")}</div>,
+  },
+  {
+    accessorKey: "createdAt",
+    header: "Created date",
+    cell: ({ row }) => {
+      const date = new Date(row.getValue("createdAt"));
+      const formattedDate = new Intl.DateTimeFormat("en-US", {
+        dateStyle: "medium",
+      }).format(date);
+
+      return <div>{formattedDate}</div>;
+    },
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => <div>{row.getValue("status")}</div>,
+  },
+  {
+    header: " ",
+    cell: () => <DialogTrigger>View Details</DialogTrigger>,
+  },
+];
