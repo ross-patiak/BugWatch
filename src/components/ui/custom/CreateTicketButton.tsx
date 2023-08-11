@@ -34,6 +34,8 @@ const CreateTicketButton = ({ className = "", employeeData }: ButtonProps) => {
   const bodyRef = useRef<HTMLTextAreaElement>(null);
   const [employee, setEmployee] = useState("");
   const [status, setStatus] = useState("open");
+  const [priority, setPriority] = useState("low");
+  const [category, setCategory] = useState("");
 
   const createTicket = api.ticket.create.useMutation();
 
@@ -44,6 +46,8 @@ const CreateTicketButton = ({ className = "", employeeData }: ButtonProps) => {
       content: bodyRef.current?.value as string,
       employeeId: employee,
       status: status,
+      priority: priority,
+      category: category,
     });
   };
 
@@ -119,6 +123,41 @@ const CreateTicketButton = ({ className = "", employeeData }: ButtonProps) => {
                     <SelectItem value="open">Open</SelectItem>
                     <SelectItem value="in_progress">In Progress</SelectItem>
                     <SelectItem value="closed">Closed</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="grid w-full gap-1.5">
+              <Label htmlFor="role">Priority</Label>
+              <Select
+                defaultValue={"low"}
+                onValueChange={(val: string) => setPriority(val)}
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Unassigned" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="low">Low</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="high">High</SelectItem>
+                    <SelectItem value="critical">Critical</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="grid w-full gap-1.5">
+              <Label htmlFor="role">Category</Label>
+              <Select onValueChange={(val: string) => setCategory(val)}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="N/A" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="frontend">Frontend</SelectItem>
+                    <SelectItem value="backend">Backend</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>

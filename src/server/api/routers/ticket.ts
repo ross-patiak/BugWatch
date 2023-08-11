@@ -2,6 +2,30 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const ticketRouter = createTRPCRouter({
+  create: protectedProcedure
+    .input(
+      z.object({
+        title: z.string(),
+        content: z.string(),
+        employeeId: z.string(),
+        status: z.string(),
+        priority: z.string(),
+        category: z.string(),
+      })
+    )
+    .mutation(
+      async ({
+        input: { title, content, employeeId, status, priority, category },
+        ctx,
+      }) => {
+        const ticket = await ctx.prisma.ticket.create({
+          data: { title, content, employeeId, status, priority, category },
+        });
+
+        return ticket;
+      }
+    ),
+
   getTickets: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.ticket.findMany({
       include: {
@@ -54,23 +78,4 @@ export const ticketRouter = createTRPCRouter({
       },
     });
   }),
-
-  create: protectedProcedure
-    .input(
-      z.object({
-        title: z.string(),
-        content: z.string(),
-        employeeId: z.string(),
-        status: z.string(),
-      })
-    )
-    .mutation(
-      async ({ input: { title, content, employeeId, status }, ctx }) => {
-        const ticket = await ctx.prisma.ticket.create({
-          data: { title, content, employeeId, status },
-        });
-
-        return ticket;
-      }
-    ),
 });
