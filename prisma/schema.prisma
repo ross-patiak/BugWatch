@@ -70,10 +70,10 @@ model Ticket {
   title           String?
   content         String?
   createdAt       DateTime  @default(now())
-  statusUpdatedAt DateTime  @default(now())
-  priority        String    @default("low")
-  category        String?
   status          String?   @default("open")
+  statusUpdatedAt DateTime  @default(now())
+  category        String?
+  priority        String    @default("low")
   employee        Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 
   @@index([employeeId])
