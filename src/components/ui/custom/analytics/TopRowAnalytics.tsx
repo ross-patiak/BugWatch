@@ -1,18 +1,5 @@
-import dynamic from "next/dynamic";
 import { api } from "@/utils/api";
 import { type Ticket } from "@prisma/client";
-
-const ReactApexChart = dynamic(() => import("react-apexcharts"), {
-  ssr: false,
-});
-
-const plotOptions: ApexPlotOptions = {
-  pie: {
-    donut: {
-      size: "40%",
-    },
-  },
-};
 
 const numTicketsByStatus = (tstatus: string) => {
   const ticketsByStatus = api.ticket.getTicketsByStatus.useQuery({
@@ -36,18 +23,6 @@ const numTicketsByStatus = (tstatus: string) => {
   }
 
   return data?.length;
-
-  // if (tstatus == "closed") {
-  //   let counter = 0;
-  //   for (let i = 0; i < data?.length; i++) {
-  //     if (data[i]?.statusUpdatedAt == today) {
-  //       counter++;
-  //     }
-  //   }
-  //   return counter;
-  // } else {
-  //   return data?.length;
-  // }
 };
 
 const numTicketsUnassigned = () => {

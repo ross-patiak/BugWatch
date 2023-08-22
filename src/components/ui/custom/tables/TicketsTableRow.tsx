@@ -14,6 +14,7 @@ import {
 import { flexRender, type Row } from "@tanstack/react-table";
 
 type ticketsTableRowProps = {
+  //eslint-disable-next-line
   row: Row<any>;
 };
 

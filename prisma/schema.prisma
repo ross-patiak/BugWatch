@@ -72,7 +72,7 @@ model Ticket {
   createdAt       DateTime  @default(now())
   statusUpdatedAt DateTime  @default(now())
   priority        String    @default("low")
-  category        String?
+  category        String?   @default("undefined")
   status          String?   @default("open")
   employee        Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 

@@ -40,6 +40,16 @@ export const ticketRouter = createTRPCRouter({
     });
   }),
 
+  getTicket: protectedProcedure
+    .input(z.object({ ticketId: z.string() }))
+    .query(async ({ input: { ticketId }, ctx }) => {
+      return await ctx.prisma.ticket.findUnique({
+        where: {
+          id: ticketId,
+        },
+      });
+    }),
+
   getTicketsByStatus: protectedProcedure
     .input(
       z.object({
@@ -53,6 +63,34 @@ export const ticketRouter = createTRPCRouter({
         },
       });
     }),
+
+  getOpenTicketsGroupedByPriority: protectedProcedure.query(async ({ ctx }) => {
+    const res = await ctx.prisma.ticket.groupBy({
+      by: ["priority"],
+      where: {
+        status: {
+          notIn: ["closed"],
+        },
+      },
+      _count: { priority: true },
+    });
+
+    return res;
+  }),
+
+  getOpenTicketsGroupedByCategory: protectedProcedure.query(async ({ ctx }) => {
+    const res = await ctx.prisma.ticket.groupBy({
+      by: ["category"],
+      where: {
+        status: {
+          notIn: ["closed"],
+        },
+      },
+      _count: { category: true },
+    });
+
+    return res;
+  }),
 
   // getTicketsClosedToday: protectedProcedure
   //   .input(
