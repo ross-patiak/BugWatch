@@ -25,6 +25,18 @@ export const ticketRouter = createTRPCRouter({
         return ticket;
       }
     ),
+    getTicket: protectedProcedure
+    .input(z.object({ ticketId: z.string() }))
+    .query(async ({ input: { ticketId }, ctx }) => {
+      return await ctx.prisma.ticket.findUnique({
+        where: {
+          id: ticketId,
+        },
+        include: {
+          employee: true,
+        },
+      });
+    }),
 
   getTickets: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.ticket.findMany({
