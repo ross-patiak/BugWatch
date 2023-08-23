@@ -6,7 +6,8 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
 
 import { type ApexOptions } from "apexcharts";
 import { api } from "@/utils/api";
-import CategoryTicketsPieChart from "./CategoryTicketsPieChart";
+import CategoryTicketsPieChart from "@/components/ui/custom/analytics/CategoryTicketsPieChart";
+
 // yaxis: {
 //     axisBorder: {
 //       show: false,
@@ -26,11 +27,6 @@ const MiddleRowAnalytics = () => {
   const getTicketsByPriority =
     api.ticket.getOpenTicketsGroupedByPriority.useQuery();
 
-  const getTicketsByCategory =
-    api.ticket.getOpenTicketsGroupedByCategory.useQuery();
-  const categoryTicketsData = getTicketsByCategory.data;
-
-  console.log(categoryTicketsData);
   const priorityTicketsData = getTicketsByPriority.data;
 
   const dataMap = new Map([
@@ -118,15 +114,17 @@ const MiddleRowAnalytics = () => {
   };
 
   return (
-    <div>
-      <ReactApexChart
-        options={plotOptions}
-        series={tmp.series}
-        type="bar"
-        height={350}
-      />
+    <div className="flex flex-row justify-between">
+      <div className="mr-5 basis-[65%]">
+        <ReactApexChart
+          options={plotOptions}
+          series={tmp.series}
+          type="bar"
+          height={350}
+        />
+      </div>
 
-      <CategoryTicketsPieChart />
+      <CategoryTicketsPieChart className="basis-[35%]" />
     </div>
   );
 };

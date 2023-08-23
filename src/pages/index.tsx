@@ -7,10 +7,10 @@ const Home: NextPage = () => {
     <div className="mx-6 my-7">
       <TopRowAnalytics />
       <MiddleRowAnalytics />
-      <DashboardCard type="property-referrals" />
+      {/* <DashboardCard type="property-referrals" />
       <DashboardCard type="top-agents" />
       <DashboardCard type="customer" />
-      <DashboardCard type="latest-sales" />
+      <DashboardCard type="latest-sales" /> */}
     </div>
   );
 };

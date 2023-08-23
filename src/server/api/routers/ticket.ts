@@ -25,7 +25,8 @@ export const ticketRouter = createTRPCRouter({
         return ticket;
       }
     ),
-    getTicket: protectedProcedure
+
+  getTicket: protectedProcedure
     .input(z.object({ ticketId: z.string() }))
     .query(async ({ input: { ticketId }, ctx }) => {
       return await ctx.prisma.ticket.findUnique({
@@ -51,16 +52,6 @@ export const ticketRouter = createTRPCRouter({
       orderBy: { title: "desc" },
     });
   }),
-
-  getTicket: protectedProcedure
-    .input(z.object({ ticketId: z.string() }))
-    .query(async ({ input: { ticketId }, ctx }) => {
-      return await ctx.prisma.ticket.findUnique({
-        where: {
-          id: ticketId,
-        },
-      });
-    }),
 
   getTicketsByStatus: protectedProcedure
     .input(
@@ -103,23 +94,6 @@ export const ticketRouter = createTRPCRouter({
 
     return res;
   }),
-
-  // getTicketsClosedToday: protectedProcedure
-  //   .input(
-  //     z.object({
-  //       updatedAt: z.date(),
-  //       status: z.string(),
-  //     })
-  //   )
-  //   .query( async ({input: {updatedAt, status}, ctx}) => {
-  //     return await ctx.prisma.ticket.count({
-  //       where:{
-  //         updatedAt: {
-  //           equals: new Date().getDate().toLocaleString()
-  //         },
-  //       },
-  //     });
-  //   }),
 
   getUnassignedTickets: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.ticket.findMany({

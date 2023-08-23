@@ -6,8 +6,13 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
 
 import { type ApexOptions } from "apexcharts";
 import { api } from "@/utils/api";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const CategoryTicketsPieChart = () => {
+type PieChartProps = {
+  className?: string;
+};
+
+const CategoryTicketsPieChart = ({ className }: PieChartProps) => {
   const getTicketsByCategory =
     api.ticket.getOpenTicketsGroupedByCategory.useQuery();
   const categoryTicketsData = getTicketsByCategory.data;
@@ -56,14 +61,19 @@ const CategoryTicketsPieChart = () => {
   };
 
   return (
-    <div>
-      <ReactApexChart
-        options={plotOptions}
-        series={dataToChart}
-        type="donut"
-        width="120px"
-      />
-    </div>
+    <Card className={className}>
+      <CardHeader>
+        <CardTitle>Open Tickets By Category</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ReactApexChart
+          options={plotOptions}
+          series={dataToChart}
+          type="donut"
+          width="120px"
+        />
+      </CardContent>
+    </Card>
   );
 };
 
