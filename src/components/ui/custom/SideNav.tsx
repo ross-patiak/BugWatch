@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 
 export function SideNav() {
   return (
-    <nav className="sticky top-0 px-4 py-6">
+    <nav className="sticky top-0 basis-[17%] px-4 py-6">
       <div className="flex w-[250px] flex-col space-y-1">
         <Link
           className={cn(buttonVariants({ variant: "ghost" }), "justify-start")}

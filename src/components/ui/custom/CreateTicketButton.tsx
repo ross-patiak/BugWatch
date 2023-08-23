@@ -35,7 +35,7 @@ const CreateTicketButton = ({ className = "", employeeData }: ButtonProps) => {
   const [employee, setEmployee] = useState("");
   const [status, setStatus] = useState("open");
   const [priority, setPriority] = useState("low");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("undefined");
 
   const createTicket = api.ticket.create.useMutation();
 
@@ -150,12 +150,16 @@ const CreateTicketButton = ({ className = "", employeeData }: ButtonProps) => {
 
             <div className="grid w-full gap-1.5">
               <Label htmlFor="role">Category</Label>
-              <Select onValueChange={(val: string) => setCategory(val)}>
+              <Select
+                defaultValue={"undefined"}
+                onValueChange={(val: string) => setCategory(val)}
+              >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="N/A" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
+                    <SelectItem value="undefined">Undefined</SelectItem>
                     <SelectItem value="frontend">Frontend</SelectItem>
                     <SelectItem value="backend">Backend</SelectItem>
                   </SelectGroup>

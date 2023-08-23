@@ -24,15 +24,17 @@ const MyApp: AppType<{ session: Session | null }> = ({
       </Head>
 
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <MainNav></MainNav>
+        <main>
+          <MainNav></MainNav>
 
-        <div className="flex items-start">
-          <SideNav></SideNav>
+          <div className="flex items-start">
+            <SideNav></SideNav>
 
-          <div className="min-h-screen flex-grow border-x-white">
-            <Component {...pageProps} />
+            <div className="min-h-screen flex-grow border-x-white">
+              <Component {...pageProps} />
+            </div>
           </div>
-        </div>
+        </main>
       </ThemeProvider>
     </SessionProvider>
   );

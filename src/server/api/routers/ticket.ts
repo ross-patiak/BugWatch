@@ -25,7 +25,8 @@ export const ticketRouter = createTRPCRouter({
         return ticket;
       }
     ),
-    getTicket: protectedProcedure
+
+  getTicket: protectedProcedure
     .input(z.object({ ticketId: z.string() }))
     .query(async ({ input: { ticketId }, ctx }) => {
       return await ctx.prisma.ticket.findUnique({
@@ -66,22 +67,33 @@ export const ticketRouter = createTRPCRouter({
       });
     }),
 
-  // getTicketsClosedToday: protectedProcedure
-  //   .input(
-  //     z.object({
-  //       updatedAt: z.date(),
-  //       status: z.string(),
-  //     })
-  //   )
-  //   .query( async ({input: {updatedAt, status}, ctx}) => {
-  //     return await ctx.prisma.ticket.count({
-  //       where:{
-  //         updatedAt: {
-  //           equals: new Date().getDate().toLocaleString()
-  //         },
-  //       },
-  //     });
-  //   }),
+  getOpenTicketsGroupedByPriority: protectedProcedure.query(async ({ ctx }) => {
+    const res = await ctx.prisma.ticket.groupBy({
+      by: ["priority"],
+      where: {
+        status: {
+          notIn: ["closed"],
+        },
+      },
+      _count: { priority: true },
+    });
+
+    return res;
+  }),
+
+  getOpenTicketsGroupedByCategory: protectedProcedure.query(async ({ ctx }) => {
+    const res = await ctx.prisma.ticket.groupBy({
+      by: ["category"],
+      where: {
+        status: {
+          notIn: ["closed"],
+        },
+      },
+      _count: { category: true },
+    });
+
+    return res;
+  }),
 
   getUnassignedTickets: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.ticket.findMany({
