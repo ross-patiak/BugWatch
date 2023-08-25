@@ -16,6 +16,7 @@ import {
   SelectValue,
   SelectGroup,
 } from "@/components/ui/select";
+import { Button as RadixButton } from "@radix-ui/themes";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -60,7 +61,9 @@ const CreateUserButton = ({ className = "" }: ButtonProps) => {
     <div className={`flex-end ${className}`}>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline">Add User</Button>
+          <RadixButton variant="soft" size="2">
+            +Add User
+          </RadixButton>
         </DialogTrigger>
 
         <DialogContent className="sm:max-w-[425px]">

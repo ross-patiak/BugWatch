@@ -36,7 +36,10 @@ const numTicketsUnassigned = () => {
 const TopRowAnalytics = () => {
   return (
     <div className="flex flex-row flex-wrap justify-between gap-6">
-      <Card className="w-[calc((100%-3*24px)/4)] min-w-[21%] grow">
+      <Card
+        className="w-[calc((100%-3*24px)/4)] min-w-[21%] grow"
+        variant="classic"
+      >
         <Flex className="px-3 py-1" direction="column">
           <Text className="pb-2" as="div" size="2">
             Currently Open
@@ -51,7 +54,10 @@ const TopRowAnalytics = () => {
         </Flex>
       </Card>
 
-      <Card className="w-[calc((100%-3*24px)/4)] min-w-[21%] grow">
+      <Card
+        className="w-[calc((100%-3*24px)/4)] min-w-[21%] grow"
+        variant="classic"
+      >
         <Flex className="px-3 py-1" direction="column">
           <Text className="pb-2" as="div" size="2">
             Closed Today
@@ -66,7 +72,10 @@ const TopRowAnalytics = () => {
         </Flex>
       </Card>
 
-      <Card className="w-[calc((100%-3*24px)/4)] min-w-[21%] grow">
+      <Card
+        className="w-[calc((100%-3*24px)/4)] min-w-[21%] grow"
+        variant="classic"
+      >
         <Flex className="px-3 py-1" direction="column">
           <Text className="pb-2" as="div" size="2">
             In Progress
@@ -81,7 +90,10 @@ const TopRowAnalytics = () => {
         </Flex>
       </Card>
 
-      <Card className="w-[calc((100%-3*24px)/4)] min-w-[21%] grow">
+      <Card
+        className="w-[calc((100%-3*24px)/4)] min-w-[21%] grow"
+        variant="classic"
+      >
         <Flex className="px-3 py-1" direction="column">
           <Text className="pb-2" as="div" size="2">
             Unassigned
