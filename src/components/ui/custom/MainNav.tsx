@@ -16,10 +16,10 @@ export function MainNav({
       <div className="w-full px-0">
         <div className="flex w-full items-center justify-between space-x-4 lg:space-x-6">
           {/* primary nav */}
-          <div className="ml-6 flex space-x-4 lg:space-x-6">
-            <Link className="flex items-center gap-1" href="/">
-              <Bug className="h-7 w-7" />
-              <Text as="span" size="4">
+          <div className="flex space-x-4 lg:space-x-6">
+            <Link className="flex items-center gap-[2px]" href="/">
+              <Bug className="h-8 w-8" />
+              <Text as="span" size="4" weight="medium">
                 BugWatch
               </Text>
             </Link>
@@ -28,11 +28,11 @@ export function MainNav({
           {/* secondary nav */}
           <div className="flex items-center space-x-2">
             {user != null ? (
-              <Button variant="soft" onClick={() => void signOut()}>
+              <Button variant="surface" onClick={() => void signOut()}>
                 Sign Out
               </Button>
             ) : (
-              <Button variant="soft" onClick={() => void signIn()}>
+              <Button variant="surface" onClick={() => void signIn()}>
                 Sign In
               </Button>
             )}

@@ -4,6 +4,7 @@ import { LayoutDashboard, Users, Kanban, UserCircle } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
+//button colors
 //dark bg: #234fff2e
 //hover dark: #315afe3d
 //light bg: #0144ff0f
@@ -14,13 +15,13 @@ export function SideNav() {
 
   return (
     <nav className="sticky top-0 h-[100vh] basis-[17%] px-4 py-6">
-      <div className="flex flex-col items-stretch">
+      <div className="flex flex-col items-stretch gap-[1px]">
         {/* Dashboard */}
         {pathname === "/" || pathname === "/dashboard" ? (
           <Link
             className={cn(
               buttonVariants({ variant: "secondary" }),
-              "justify-start bg-[#0144ff0f] px-6 py-6 text-base text-[rgba(0,37,158,.797)] hover:bg-[#0247f519] dark:bg-[#234fff2e] dark:text-white dark:hover:bg-[#315afe3d]"
+              "justify-start bg-[#0144ff0f] px-6 py-7 text-base text-[rgba(0,37,158,.797)] hover:bg-[#0247f519] dark:bg-[#234fff2e] dark:text-white dark:hover:bg-[#315afe3d]"
             )}
             href="/"
           >
@@ -33,7 +34,7 @@ export function SideNav() {
           <Link
             className={cn(
               buttonVariants({ variant: "ghost" }),
-              "justify-start px-6 py-6 text-base text-zinc-600 hover:bg-[#0247f519] hover:text-[rgba(0,37,158,.797)] dark:text-zinc-500 dark:hover:bg-[#315afe3d] dark:hover:text-[#FAF9F6]"
+              "justify-start px-6 py-7 text-base text-zinc-600 hover:bg-[#0247f519] hover:text-[rgba(0,37,158,.797)] dark:text-zinc-500 dark:hover:bg-[#315afe3d] dark:hover:text-[#FAF9F6]"
             )}
             href="/"
           >
@@ -49,7 +50,7 @@ export function SideNav() {
           <Link
             className={cn(
               buttonVariants({ variant: "secondary" }),
-              "justify-start bg-[#0144ff0f] px-6 py-6 text-base text-[rgba(0,37,158,.797)] hover:bg-[#0247f519] dark:bg-[#234fff2e] dark:text-white dark:hover:bg-[#315afe3d]"
+              "justify-start bg-[#0144ff0f] px-6 py-7 text-base text-[rgba(0,37,158,.797)] hover:bg-[#0247f519] dark:bg-[#234fff2e] dark:text-white dark:hover:bg-[#315afe3d]"
             )}
             href="/users"
           >
@@ -62,7 +63,7 @@ export function SideNav() {
           <Link
             className={cn(
               buttonVariants({ variant: "ghost" }),
-              "justify-start px-6 py-6 text-base text-zinc-600 hover:bg-[#0247f519] hover:text-[rgba(0,37,158,.797)] dark:text-zinc-500 dark:hover:bg-[#315afe3d] dark:hover:text-[#FAF9F6]"
+              "justify-start px-6 py-7 text-base text-zinc-600 hover:bg-[#0247f519] hover:text-[rgba(0,37,158,.797)] dark:text-zinc-500 dark:hover:bg-[#315afe3d] dark:hover:text-[#FAF9F6]"
             )}
             href="/users"
           >
@@ -78,7 +79,7 @@ export function SideNav() {
           <Link
             className={cn(
               buttonVariants({ variant: "secondary" }),
-              "justify-start bg-[#0144ff0f] px-6 py-6 text-base text-[rgba(0,37,158,.797)] hover:bg-[#0247f519] dark:bg-[#234fff2e] dark:text-white dark:hover:bg-[#315afe3d]"
+              "justify-start bg-[#0144ff0f] px-6 py-7 text-base text-[rgba(0,37,158,.797)] hover:bg-[#0247f519] dark:bg-[#234fff2e] dark:text-white dark:hover:bg-[#315afe3d]"
             )}
             href="/tickets"
           >
@@ -91,7 +92,7 @@ export function SideNav() {
           <Link
             className={cn(
               buttonVariants({ variant: "ghost" }),
-              "justify-start px-6 py-6 text-base text-zinc-600 hover:bg-[#0247f519] hover:text-[rgba(0,37,158,.797)] dark:text-zinc-500 dark:hover:bg-[#315afe3d] dark:hover:text-[#FAF9F6]"
+              "justify-start px-6 py-7 text-base text-zinc-600 hover:bg-[#0247f519] hover:text-[rgba(0,37,158,.797)] dark:text-zinc-500 dark:hover:bg-[#315afe3d] dark:hover:text-[#FAF9F6]"
             )}
             href="/tickets"
           >
