@@ -7,6 +7,8 @@ import Head from "next/head";
 import { ThemeProvider } from "@/components/ui/custom/ThemeProvider";
 import { MainNav } from "@/components/ui/custom/MainNav";
 import { SideNav } from "@/components/ui/custom/SideNav";
+import "@radix-ui/themes/styles.css";
+import { Theme } from "@radix-ui/themes";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -24,17 +26,17 @@ const MyApp: AppType<{ session: Session | null }> = ({
       </Head>
 
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <main>
-          <MainNav></MainNav>
-
-          <div className="flex items-start">
-            <SideNav></SideNav>
-
-            <div className="min-h-screen flex-grow border-x-white">
-              <Component {...pageProps} />
+        <Theme grayColor="slate" radius="large">
+          <main>
+            <MainNav></MainNav>
+            <div className="flex items-start">
+              <SideNav></SideNav>
+              <div className="min-h-screen flex-grow rounded bg-[#F4F4F4] dark:bg-[#111315]">
+                <Component {...pageProps} />
+              </div>
             </div>
-          </div>
-        </main>
+          </main>
+        </Theme>
       </ThemeProvider>
     </SessionProvider>
   );

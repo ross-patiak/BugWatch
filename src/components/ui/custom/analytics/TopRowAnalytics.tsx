@@ -1,6 +1,6 @@
 import { api } from "@/utils/api";
 import { type Ticket } from "@prisma/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, Flex, Text } from "@radix-ui/themes";
 
 const numTicketsByStatus = (tstatus: string) => {
   const ticketsByStatus = api.ticket.getTicketsByStatus.useQuery({
@@ -32,36 +32,68 @@ const numTicketsUnassigned = () => {
 
   return data?.length;
 };
-
+//TODO: fix responsive stretching of cards
 const TopRowAnalytics = () => {
   return (
-    <div className="flex flex-row flex-wrap items-center justify-between gap-6">
-      <Card className="flex grow flex-col rounded-2xl px-[22px] py-6">
-        <div>Currently Open</div>
-        <div className="flex">
-          <div>{numTicketsByStatus("open")}</div>
-        </div>
+    <div className="flex flex-row flex-wrap justify-between gap-6">
+      <Card className="w-[calc((100%-3*24px)/4)] min-w-[21%] grow">
+        <Flex className="px-3 py-1" direction="column">
+          <Text className="pb-2" as="div" size="2">
+            Currently Open
+          </Text>
+
+          <Text as="div" size="7" weight="bold" align="left">
+            {numTicketsByStatus("open")}
+            <Text size="2" weight="regular" ml="1">
+              Tickets
+            </Text>
+          </Text>
+        </Flex>
       </Card>
 
-      <Card className="flex grow flex-col rounded-2xl px-[22px] py-6">
-        <div>Closed Today</div>
-        <div className="flex">
-          <div>{numTicketsByStatus("closed")}</div>
-        </div>
+      <Card className="w-[calc((100%-3*24px)/4)] min-w-[21%] grow">
+        <Flex className="px-3 py-1" direction="column">
+          <Text className="pb-2" as="div" size="2">
+            Closed Today
+          </Text>
+
+          <Text as="div" size="7" weight="bold" align="left">
+            {numTicketsByStatus("closed")}
+            <Text size="2" weight="regular" ml="1">
+              Tickets
+            </Text>
+          </Text>
+        </Flex>
       </Card>
 
-      <Card className="flex grow flex-col rounded-2xl px-[22px] py-6">
-        <div>In Progress</div>
-        <div className="flex">
-          <div>{numTicketsByStatus("in_progress")}</div>
-        </div>
+      <Card className="w-[calc((100%-3*24px)/4)] min-w-[21%] grow">
+        <Flex className="px-3 py-1" direction="column">
+          <Text className="pb-2" as="div" size="2">
+            In Progress
+          </Text>
+
+          <Text as="div" size="7" weight="bold" align="left">
+            {numTicketsByStatus("in progress")}
+            <Text size="2" weight="regular" ml="1">
+              Tickets
+            </Text>
+          </Text>
+        </Flex>
       </Card>
 
-      <Card className="flex grow flex-col rounded-2xl px-[22px] py-6">
-        <div>Unassigned</div>
-        <div className="flex">
-          <div>{numTicketsUnassigned()}</div>
-        </div>
+      <Card className="w-[calc((100%-3*24px)/4)] min-w-[21%] grow">
+        <Flex className="px-3 py-1" direction="column">
+          <Text className="pb-2" as="div" size="2">
+            Unassigned
+          </Text>
+
+          <Text as="div" size="7" weight="bold" align="left">
+            {numTicketsUnassigned()}
+            <Text size="2" weight="regular" ml="1">
+              Tickets
+            </Text>
+          </Text>
+        </Flex>
       </Card>
     </div>
   );
