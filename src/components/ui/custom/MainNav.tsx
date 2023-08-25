@@ -1,7 +1,8 @@
 import { signOut, signIn, useSession } from "next-auth/react";
+import { Button, Text } from "@radix-ui/themes";
+import { DarkModeToggle } from "@/components/ui/custom/DarkModeToggle";
+import { Bug } from "lucide-react";
 import Link from "next/link";
-
-import { Button } from "@/components/ui/button";
 
 export function MainNav({
   className,
@@ -11,50 +12,34 @@ export function MainNav({
   const user = session.data?.user;
 
   return (
-    <div className="mx-8 flex justify-center">
-      <nav className="w-full px-0">
-        <div className="flex h-14 w-full items-center justify-between space-x-4 lg:space-x-6">
+    <div className="flex justify-center px-[20px] py-[15px]">
+      <div className="w-full px-0">
+        <div className="flex w-full items-center justify-between space-x-4 lg:space-x-6">
           {/* primary nav */}
-          <div className="flex space-x-4 lg:space-x-6">
-            <Link
-              href="/examples/dashboard"
-              className="text-sm font-medium transition-colors hover:text-primary"
-            >
-              Overview
+          <div className="ml-6 flex space-x-4 lg:space-x-6">
+            <Link className="flex items-center gap-1" href="/">
+              <Bug className="h-7 w-7" />
+              <Text as="span" size="4">
+                BugWatch
+              </Text>
             </Link>
           </div>
 
           {/* secondary nav */}
-          <div className="flex items-center space-x-4 lg:space-x-6">
-            {user != null && (
-              <Link
-                href={`/profiles/${user.id}`}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-              >
-                Profile
-              </Link>
-            )}
-
+          <div className="flex items-center space-x-2">
             {user != null ? (
-              <Button
-                variant="default"
-                onClick={() => void signOut()}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-              >
+              <Button variant="soft" onClick={() => void signOut()}>
                 Sign Out
               </Button>
             ) : (
-              <Button
-                variant="default"
-                onClick={() => void signIn()}
-                className="text-sm font-medium"
-              >
+              <Button variant="soft" onClick={() => void signIn()}>
                 Sign In
               </Button>
             )}
+            <DarkModeToggle />
           </div>
         </div>
-      </nav>
+      </div>
     </div>
   );
 }
