@@ -1,12 +1,8 @@
-import dynamic from "next/dynamic";
+//import dynamic from "next/dynamic";
 
-const ReactApexChart = dynamic(() => import("react-apexcharts"), {
-  ssr: false,
-});
-
-import { type ApexOptions } from "apexcharts";
+import { Title, DonutChart } from "@tremor/react";
 import { api } from "@/utils/api";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@radix-ui/themes";
 
 type PieChartProps = {
   className?: string;
@@ -29,50 +25,32 @@ const CategoryTicketsPieChart = ({ className }: PieChartProps) => {
     dataMap.set(category as string, _count.category);
   });
 
-  const dataToChart = [...dataMap.values()];
-
-  const plotOptions: ApexOptions = {
-    labels: ["Undefined", "Frontend", "Backend"],
-    chart: {
-      type: "donut",
+  const data = [
+    {
+      name: "Undefined",
+      count: dataMap.get("undefined"),
     },
-    colors: ["#475BE8", "red", "red"],
-    plotOptions: {
-      pie: {
-        donut: {
-          size: "65%",
-        },
-      },
+    {
+      name: "Frontend",
+      count: dataMap.get("frontend"),
     },
-    legend: {
-      show: false,
+    {
+      name: "Backend",
+      count: dataMap.get("backend"),
     },
-    dataLabels: {
-      enabled: true,
-      formatter: (val: string) => {
-        return val + "%";
-      },
-      //   offsetX: -50,
-      style: {
-        fontSize: "12px",
-        colors: ["red"],
-      },
-    },
-  };
+  ];
 
   return (
-    <Card className={className}>
-      <CardHeader>
-        <CardTitle>Open Tickets By Category</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <ReactApexChart
-          options={plotOptions}
-          series={dataToChart}
-          type="donut"
-          width="120px"
-        />
-      </CardContent>
+    <Card className="max-w-lg">
+      <Title>Open Tickets By Category</Title>
+      <DonutChart
+        className="mt-6"
+        data={data}
+        category="count"
+        index="name"
+        colors={["slate", "violet", "indigo"]}
+        variant="pie"
+      />
     </Card>
   );
 };
