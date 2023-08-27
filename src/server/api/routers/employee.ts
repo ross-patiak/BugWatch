@@ -35,6 +35,9 @@ export const employeeRouter = createTRPCRouter({
   getEmployees: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.employee.findMany({
       //TODO: maybe change the default orderBy (maybe by name but u gotta parse last names on the frontend before passing it to the back i think)
+      include: {
+        tickets: true,
+      },
       orderBy: { userRole: "desc" },
     });
   }),

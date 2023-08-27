@@ -22,9 +22,11 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { type FormEvent, useRef, useState } from "react";
 import { api } from "@/utils/api";
+import { type UseTRPCQueryResult } from "@trpc/react-query/dist/shared/hooks/types";
 
 type ButtonProps = {
   className?: string;
+  employeesQuery?: UseTRPCQueryResult<unknown, unknown>;
 };
 
 const getImage = async () => {
@@ -34,12 +36,17 @@ const getImage = async () => {
   return data?.results[0].picture.large;
 };
 
-const CreateUserButton = ({ className = "" }: ButtonProps) => {
+const CreateUserButton = ({ className = "", employeesQuery }: ButtonProps) => {
   const [role, setRole] = useState("");
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
 
-  const createUser = api.employee.create.useMutation();
+  const createUser = api.employee.create.useMutation({
+    onSuccess: () => {
+      //.catch mandated by eslint
+      employeesQuery?.refetch().catch((err) => console.log(err));
+    },
+  });
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

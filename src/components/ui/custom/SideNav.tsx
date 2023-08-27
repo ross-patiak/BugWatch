@@ -46,7 +46,7 @@ export function SideNav() {
         )}
 
         {/* Users */}
-        {pathname === "/users" ? (
+        {pathname.includes("/users") ? (
           <Link
             className={cn(
               buttonVariants({ variant: "secondary" }),
@@ -75,7 +75,7 @@ export function SideNav() {
         )}
 
         {/* Tickets */}
-        {pathname === "/tickets" ? (
+        {pathname.includes("/tickets") ? (
           <Link
             className={cn(
               buttonVariants({ variant: "secondary" }),

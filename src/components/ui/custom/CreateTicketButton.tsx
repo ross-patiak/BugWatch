@@ -23,13 +23,19 @@ import { Textarea } from "@/components/ui/textarea";
 import { type FormEvent, useRef, useState } from "react";
 import { api } from "@/utils/api";
 import { type Employee } from "@prisma/client";
+import { type UseTRPCQueryResult } from "@trpc/react-query/dist/shared/hooks/types";
 
 type ButtonProps = {
   className?: string;
   employeeData: Employee[];
+  ticketsQuery?: UseTRPCQueryResult<unknown, unknown>;
 };
 
-const CreateTicketButton = ({ className = "", employeeData }: ButtonProps) => {
+const CreateTicketButton = ({
+  className = "",
+  employeeData,
+  ticketsQuery,
+}: ButtonProps) => {
   const titleRef = useRef<HTMLInputElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
   const [employee, setEmployee] = useState("");
@@ -37,7 +43,12 @@ const CreateTicketButton = ({ className = "", employeeData }: ButtonProps) => {
   const [priority, setPriority] = useState("low");
   const [category, setCategory] = useState("undefined");
 
-  const createTicket = api.ticket.create.useMutation();
+  const createTicket = api.ticket.create.useMutation({
+    onSuccess: () => {
+      //.catch mandated by eslint
+      ticketsQuery?.refetch().catch((err) => console.log(err));
+    },
+  });
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
