@@ -1,13 +1,16 @@
 import CreateTicketButton from "@/components/ui/custom/CreateTicketButton";
-import TicketsList from "@/components/ui/custom/tickets/TicketsList";
+import TicketsList, {
+  type ticketWithEmployeeType,
+} from "@/components/ui/custom/tickets/TicketsList";
 import { api } from "@/utils/api";
-import { type Ticket, type Employee } from "@prisma/client";
+import { type Employee } from "@prisma/client";
 import { type NextPage } from "next";
 import { Heading } from "@radix-ui/themes";
 
 const TicketsPage: NextPage = () => {
   const getTickets = api.ticket.getTickets.useQuery();
-  const ticketData: Ticket[] = getTickets.data as Ticket[];
+  const ticketData: ticketWithEmployeeType[] =
+    getTickets.data as ticketWithEmployeeType[];
   const getEmployees = api.employee.getEmployees.useQuery();
   const employeeData: Employee[] = getEmployees.data as Employee[];
   //TODO: make title, content, etc required/optional
