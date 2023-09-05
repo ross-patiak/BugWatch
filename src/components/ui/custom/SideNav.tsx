@@ -45,35 +45,6 @@ export function SideNav() {
           </Link>
         )}
 
-        {/* Users */}
-        {pathname.includes("/users") ? (
-          <Link
-            className={cn(
-              buttonVariants({ variant: "secondary" }),
-              "justify-start bg-[#0144ff0f] px-6 py-7 text-base text-[rgba(0,37,158,.797)] hover:bg-[#0247f519] dark:bg-[#234fff2e] dark:text-white dark:hover:bg-[#315afe3d]"
-            )}
-            href="/users"
-          >
-            <div className="flex items-center gap-[10px]">
-              <Users />
-              Users
-            </div>
-          </Link>
-        ) : (
-          <Link
-            className={cn(
-              buttonVariants({ variant: "ghost" }),
-              "justify-start px-6 py-7 text-base text-zinc-600 hover:bg-[#0247f519] hover:text-[rgba(0,37,158,.797)] dark:text-zinc-500 dark:hover:bg-[#315afe3d] dark:hover:text-[#FAF9F6]"
-            )}
-            href="/users"
-          >
-            <div className="flex items-center gap-[10px]">
-              <Users />
-              Users
-            </div>
-          </Link>
-        )}
-
         {/* Tickets */}
         {pathname.includes("/tickets") ? (
           <Link
@@ -99,6 +70,35 @@ export function SideNav() {
             <div className="flex items-center gap-[10px]">
               <Kanban />
               Tickets
+            </div>
+          </Link>
+        )}
+
+        {/* Users */}
+        {pathname.includes("/users") ? (
+          <Link
+            className={cn(
+              buttonVariants({ variant: "secondary" }),
+              "justify-start bg-[#0144ff0f] px-6 py-7 text-base text-[rgba(0,37,158,.797)] hover:bg-[#0247f519] dark:bg-[#234fff2e] dark:text-white dark:hover:bg-[#315afe3d]"
+            )}
+            href="/users"
+          >
+            <div className="flex items-center gap-[10px]">
+              <Users />
+              Users
+            </div>
+          </Link>
+        ) : (
+          <Link
+            className={cn(
+              buttonVariants({ variant: "ghost" }),
+              "justify-start px-6 py-7 text-base text-zinc-600 hover:bg-[#0247f519] hover:text-[rgba(0,37,158,.797)] dark:text-zinc-500 dark:hover:bg-[#315afe3d] dark:hover:text-[#FAF9F6]"
+            )}
+            href="/users"
+          >
+            <div className="flex items-center gap-[10px]">
+              <Users />
+              Users
             </div>
           </Link>
         )}

@@ -42,11 +42,10 @@ const MiddleRowAnalytics = () => {
     },
   ];
 
-  console.log(chartdata);
   return (
     <div className="flex flex-row justify-between">
       <div className="mr-5 basis-[65%]">
-        <Card>
+        <Card size="2">
           <Title>Tickets By Priority</Title>
           <BarChart
             className="mt-6"

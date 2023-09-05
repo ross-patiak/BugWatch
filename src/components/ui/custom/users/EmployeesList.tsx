@@ -21,7 +21,7 @@ type EmployeesListProps = {
 
 const EmployeesList = ({ data }: EmployeesListProps) => {
   return (
-    <div className="flex flex-col gap-4 px-5">
+    <div className="flex flex-col gap-4">
       <div className="self-end">
         <TextField.Root>
           <TextField.Slot>
