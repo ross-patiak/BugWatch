@@ -7,7 +7,6 @@ import { useTheme } from "next-themes";
 import { IconButton, DropdownMenu } from "@radix-ui/themes";
 
 export function DarkModeToggle() {
-  /* eslint-disable */
   const { setTheme } = useTheme();
 
   return (

@@ -3,6 +3,7 @@
 import { Title, DonutChart } from "@tremor/react";
 import { api } from "@/utils/api";
 import { Card } from "@radix-ui/themes";
+import { cn } from "@/lib/utils";
 
 type PieChartProps = {
   className?: string;
@@ -41,7 +42,7 @@ const CategoryTicketsPieChart = ({ className }: PieChartProps) => {
   ];
 
   return (
-    <Card className="max-w-lg">
+    <Card size="2" className={cn(className, "flex")}>
       <Title>Open Tickets By Category</Title>
       <DonutChart
         className="mt-6"

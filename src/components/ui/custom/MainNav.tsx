@@ -4,10 +4,7 @@ import { DarkModeToggle } from "@/components/ui/custom/DarkModeToggle";
 import { Bug } from "lucide-react";
 import Link from "next/link";
 
-export function MainNav({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLElement>) {
+export function MainNav() {
   const session = useSession();
   const user = session.data?.user;
 

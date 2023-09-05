@@ -31,7 +31,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
             <MainNav></MainNav>
             <div className="flex items-start">
               <SideNav></SideNav>
-              <div className="min-h-screen flex-grow rounded bg-[#F4F4F4] dark:bg-[#111315]">
+              <div className="min-h-screen flex-grow basis-[83%] rounded bg-[#F4F4F4] dark:bg-[#111315]">
                 <Component {...pageProps} />
               </div>
             </div>

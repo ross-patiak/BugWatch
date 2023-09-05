@@ -10,7 +10,7 @@ const UsersPage: NextPage = () => {
   const { data } = getEmployees;
 
   return (
-    <div className="mx-7 my-8 flex-col">
+    <div className="mx-7 my-7 flex-col">
       <div className="flex items-center justify-between pb-5">
         <Heading>Users List</Heading>
         <CreateUserButton employeesQuery={getEmployees} />

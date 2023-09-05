@@ -1,6 +1,52 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
- 
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
+
+export const categoryMap = new Map([
+  ["backend", { value: "Backend", color: "green" }],
+  ["frontend", { value: "Frontend", color: "indigo" }],
+]);
+
+export const priorityMap = new Map([
+  ["low", { value: "Low", color: "green" }],
+  ["medium", { value: "Medium", color: "indigo" }],
+  ["high", { value: "High", color: "tomato" }],
+  ["critical", { value: "Critical", color: "red" }],
+]);
+
+export const statusMap = new Map([
+  ["closed", { value: "Closed", color: "ruby" }],
+  ["in_progress", { value: "In Progress", color: "sky" }],
+  ["open", { value: "Open", color: "teal" }],
+]);
+
+export type badgeColor =
+  | "tomato"
+  | "red"
+  | "ruby"
+  | "crimson"
+  | "pink"
+  | "plum"
+  | "purple"
+  | "violet"
+  | "iris"
+  | "indigo"
+  | "blue"
+  | "cyan"
+  | "teal"
+  | "jade"
+  | "green"
+  | "grass"
+  | "brown"
+  | "orange"
+  | "sky"
+  | "mint"
+  | "lime"
+  | "yellow"
+  | "amber"
+  | "gold"
+  | "bronze"
+  | "gray";
