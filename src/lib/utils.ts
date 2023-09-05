@@ -11,7 +11,7 @@ export const categoryMap = new Map([
 ]);
 
 export const priorityMap = new Map([
-  ["low", { value: "Low", color: "green" }],
+  ["low", { value: "Low", color: "teal" }],
   ["medium", { value: "Medium", color: "indigo" }],
   ["high", { value: "High", color: "tomato" }],
   ["critical", { value: "Critical", color: "red" }],

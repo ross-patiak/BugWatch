@@ -1,18 +1,24 @@
 "use client";
 
-import { type Ticket } from "@prisma/client";
-// import { type employeesWithTicketsType } from "@/components/ui/custom/users/EmployeesList";
-import { Card, Text, Badge, DropdownMenu, Button } from "@radix-ui/themes";
+import {
+  Card,
+  Text,
+  Badge,
+  DropdownMenu,
+  Button,
+  Avatar,
+} from "@radix-ui/themes";
 import { MoreVertical, Trash2, Pencil, MessageSquare } from "lucide-react";
 import Link from "next/link";
-import { categoryMap, type badgeColor } from "@/lib/utils";
+import { categoryMap, type badgeColor, priorityMap } from "@/lib/utils";
+import { type ticketWithEmployeeType } from "./TicketsList";
 
 type TicketsListEntryProps = {
-  ticket: Ticket;
+  ticket: ticketWithEmployeeType;
 };
 
 const TicketsListEntry = ({ ticket }: TicketsListEntryProps) => {
-  const { id, title, content, category } = ticket;
+  const { id, title, category, priority, employee } = ticket;
 
   return (
     <Card size="2" asChild>
@@ -20,27 +26,52 @@ const TicketsListEntry = ({ ticket }: TicketsListEntryProps) => {
         <div className="flex h-full grow pl-2">
           <div className="flex grow flex-col justify-between">
             {/* top part */}
-            <div className="mb-3 flex flex-col gap-1">
+            <div className="mb-3 flex flex-col gap-2">
               <Text as="div" size="5" weight="medium">
                 {title}
               </Text>
 
-              {category != "undefined" && category != null ? (
-                <Badge
-                  className="max-w-fit"
-                  variant="soft"
-                  color={categoryMap?.get(category)?.color as badgeColor}
-                >
-                  {categoryMap?.get(category)?.value}
-                </Badge>
-              ) : null}
+              <div className="flex flex-col gap-1">
+                {/* TODO: multiple categories available+display */}
+                {category != "undefined" && category != null ? (
+                  <Badge
+                    className="max-w-fit"
+                    variant="soft"
+                    color={categoryMap?.get(category)?.color as badgeColor}
+                  >
+                    {categoryMap?.get(category)?.value}
+                  </Badge>
+                ) : null}
+
+                {priority != null ? (
+                  <Badge
+                    className="max-w-fit"
+                    radius="full"
+                    variant="soft"
+                    color={priorityMap?.get(priority)?.color as badgeColor}
+                  >
+                    {priorityMap?.get(priority)?.value}
+                  </Badge>
+                ) : null}
+              </div>
             </div>
 
             {/* bottom part */}
-            <div className="flex flex-col gap-3">
-              <Text as="div" size="2">
-                {content}
-              </Text>
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-row items-center gap-2">
+                <>
+                  <Avatar
+                    src={employee?.image as string}
+                    radius="full"
+                    fallback={employee?.name?.charAt(0).toUpperCase() as string}
+                    color="indigo"
+                    size="2"
+                  />
+                  <Text as="span" size="2">
+                    {employee?.name}
+                  </Text>
+                </>
+              </div>
 
               <Text
                 className="flex items-center gap-1"
