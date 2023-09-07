@@ -6,7 +6,9 @@ import { Flex, Heading } from "@radix-ui/themes";
 const Home: NextPage = () => {
   return (
     <div className="mx-7 my-7">
-      <Heading className="pb-5">Dashboard</Heading>
+      <Heading className="pb-5" size="7">
+        Dashboard
+      </Heading>
       <Flex gap="5" direction="column">
         <TopRowAnalytics />
         <MiddleRowAnalytics />

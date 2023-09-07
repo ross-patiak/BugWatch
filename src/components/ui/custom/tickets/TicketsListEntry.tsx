@@ -11,7 +11,7 @@ import {
 import { MoreVertical, Trash2, Pencil, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { categoryMap, type badgeColor, priorityMap } from "@/lib/utils";
-import { type ticketWithEmployeeType } from "./TicketsList";
+import { type ticketWithEmployeeType } from "@/lib/prismaTypes";
 
 type TicketsListEntryProps = {
   ticket: ticketWithEmployeeType;

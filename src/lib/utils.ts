@@ -23,6 +23,11 @@ export const statusMap = new Map([
   ["open", { value: "Open", color: "teal" }],
 ]);
 
+export const roleMap = new Map([
+  ["Developer", "green"],
+  ["Project Manager", "indigo"],
+]);
+
 export type badgeColor =
   | "tomato"
   | "red"
