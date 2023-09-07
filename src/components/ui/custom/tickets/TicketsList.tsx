@@ -1,19 +1,9 @@
 "use client";
 
-import { Prisma } from "@prisma/client";
 import { TextField } from "@radix-ui/themes";
 import TicketsListEntry from "@/components/ui/custom/tickets/TicketsListEntry";
 import { Search } from "lucide-react";
-
-//need to manually recreate ticketsWithEmployeeAssigned type bc prisma does not include relations by default
-const ticketWithEmployeeRelation = Prisma.validator<Prisma.TicketArgs>()({
-  include: { employee: true },
-});
-
-//exporting type bc ListEntry needs it
-export type ticketWithEmployeeType = Prisma.TicketGetPayload<
-  typeof ticketWithEmployeeRelation
->;
+import { type ticketWithEmployeeType } from "@/lib/prismaTypes";
 
 type TicketsListProps = {
   data: ticketWithEmployeeType[];
