@@ -1,6 +1,6 @@
 import { buttonVariants } from "@/components/ui/button";
 import { useRouter } from "next/router";
-import { LayoutDashboard, Users, Kanban, UserCircle } from "lucide-react";
+import { LayoutDashboard, Users, Kanban } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { type employeesWithTicketsType } from "@/components/ui/custom/users/EmployeesList";
+import { type employeesWithTicketsType } from "@/lib/prismaTypes";
 import {
   Card,
   Text,
