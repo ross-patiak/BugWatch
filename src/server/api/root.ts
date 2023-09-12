@@ -1,6 +1,6 @@
 import { ticketRouter } from "@/server/api/routers/ticket";
 import { createTRPCRouter } from "@/server/api/trpc";
-import { employeeRouter } from "./routers/employee";
+import { employeeRouter } from "@/server/api/routers/employee";
 
 /**
  * This is the primary router for your server.
