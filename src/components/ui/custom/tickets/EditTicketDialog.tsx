@@ -36,12 +36,12 @@ const FormSchema = z.object({
   title: z
     .string()
     .max(60, {
-      message: "Title must be no more than 60 characters.",
+      message: "Title must be no more than 60 characters",
     })
-    .min(1, { message: "Title is required." }),
-  content: z.string().min(1, { message: "Description is required." }),
+    .min(1, { message: "Title is required" }),
+  content: z.string().min(1, { message: "Description is required" }),
   category: z.string().optional(),
-  priority: z.string().min(1, { message: "Priority is required." }),
+  priority: z.string().min(1, { message: "Priority is required" }),
   status: z.string().optional(),
   employeeId: z.string().optional(),
 });
@@ -122,7 +122,7 @@ const EditTicketDialog = ({ ticketData }: EditTicketProps) => {
         </div>
       </Dialog.Title>
       <Dialog.Description size="2" mb="4">
-        Make changes to this ticket.
+        Make changes to this ticket
       </Dialog.Description>
 
       <Form {...form}>
