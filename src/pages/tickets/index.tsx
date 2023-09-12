@@ -1,4 +1,4 @@
-import CreateTicketButton from "@/components/ui/custom/CreateTicketButton";
+import CreateTicketButton from "@/components/ui/custom/tickets/CreateTicketButton";
 import TicketsList from "@/components/ui/custom/tickets/TicketsList";
 import { api } from "@/utils/api";
 import { type NextPage } from "next";

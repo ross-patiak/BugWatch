@@ -55,7 +55,7 @@ const TicketDetails = ({ ticketData }: TicketDetailsProps) => {
           {/** top half - 2 */}
           <div className="flex flex-col gap-2">
             <Text as="div" size="3">
-              Status:{" "}
+              Status:
               <Code
                 variant="soft"
                 color={
