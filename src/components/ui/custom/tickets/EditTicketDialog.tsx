@@ -212,6 +212,9 @@ const EditTicketDialog = ({ ticketData }: EditTicketProps) => {
                         <Select.Item key="high" value="high">
                           High
                         </Select.Item>
+                        <Select.Item key="critical" value="critical">
+                          Critical
+                        </Select.Item>
                       </Select.Content>
                     </Select.Root>
                   </FormControl>
@@ -269,6 +272,9 @@ const EditTicketDialog = ({ ticketData }: EditTicketProps) => {
                     <Select.Root onValueChange={field.onChange} {...field}>
                       <Select.Trigger placeholder="Assign category" />
                       <Select.Content>
+                        <Select.Item key="undefined" value="undefined">
+                          None
+                        </Select.Item>
                         {[...categoryMap.entries()].map((entry) => (
                           <Select.Item key={entry[0]} value={entry[0]}>
                             {entry[1].value}

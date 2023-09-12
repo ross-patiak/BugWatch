@@ -1,195 +1,350 @@
 import {
+  IconButton,
+  Button,
   Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-  DialogClose,
-} from "@/components/ui/dialog";
-import {
+  TextField,
+  Text,
   Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  SelectGroup,
-} from "@/components/ui/select";
-import { Button as RadixButton } from "@radix-ui/themes";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { type FormEvent, useRef, useState } from "react";
+  TextArea,
+  Avatar,
+} from "@radix-ui/themes";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, useFormState } from "react-hook-form";
+import * as z from "zod";
 import { api } from "@/utils/api";
-import { type Employee } from "@prisma/client";
-import { type UseTRPCQueryResult } from "@trpc/react-query/dist/shared/hooks/types";
+import { Plus, X } from "lucide-react";
+import { categoryMap, statusMap } from "@/lib/utils";
 
-type ButtonProps = {
-  className?: string;
-  employeeData: Employee[];
-  ticketsQuery?: UseTRPCQueryResult<unknown, unknown>;
-};
+const CreateTicketButton = () => {
+  const ctx = api.useContext();
+  const getEmployees = api.employee.getEmployees.useQuery();
 
-const CreateTicketButton = ({
-  className = "",
-  employeeData,
-  ticketsQuery,
-}: ButtonProps) => {
-  const titleRef = useRef<HTMLInputElement>(null);
-  const bodyRef = useRef<HTMLTextAreaElement>(null);
-  const [employee, setEmployee] = useState("");
-  const [status, setStatus] = useState("open");
-  const [priority, setPriority] = useState("low");
-  const [category, setCategory] = useState("undefined");
+  const employeesList = getEmployees?.data;
 
   const createTicket = api.ticket.create.useMutation({
     onSuccess: () => {
       //.catch mandated by eslint
-      ticketsQuery?.refetch().catch((err) => console.log(err));
+      ctx.ticket.getTickets.invalidate().catch((err) => console.log(err));
     },
   });
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+  const FormSchema = z.object({
+    title: z
+      .string()
+      .max(60, {
+        message: "Title must be no more than 60 characters",
+      })
+      .min(1, { message: "Title is required" }),
+    content: z.string().min(1, { message: "Description is required" }),
+    category: z.string().optional(),
+    priority: z.string().min(1, { message: "Priority is required" }),
+    status: z.string().optional(),
+    employeeId: z.string().optional(),
+  });
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      title: "",
+      content: "",
+      priority: "low",
+      category: "undefined",
+      status: "open",
+      employeeId: "",
+    },
+  });
+
+  //checks if each input is valid (from react hooks form)
+  const { isValid } = useFormState({ control: form.control });
+
+  const onSubmit = (data: z.infer<typeof FormSchema>) => {
+    const { title, content, priority, category, status, employeeId } = data;
+
     createTicket.mutate({
-      title: titleRef.current?.value as string,
-      content: bodyRef.current?.value as string,
-      employeeId: employee,
-      status: status,
+      title: title,
+      content: content,
       priority: priority,
-      category: category,
+      category: category as string,
+      status: status as string,
+      employeeId: employeeId as string,
     });
   };
 
-  //TODO: make title, content, etc required/optional
+  /* eslint-disable @typescript-eslint/no-misused-promises*/
   return (
-    <div className={`flex-end ${className}`}>
-      <Dialog>
-        <DialogTrigger asChild>
-          <RadixButton variant="soft" size="2">
-            +Create Ticket
-          </RadixButton>
-        </DialogTrigger>
+    <div className="flex-end">
+      <Dialog.Root>
+        <Dialog.Trigger>
+          <Button variant="soft">
+            <Plus size={18} />
+            Create Ticket
+          </Button>
+        </Dialog.Trigger>
 
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Create Ticket</DialogTitle>
-            <DialogDescription>
-              Enter ticket details here. Click create when you are done.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid w-full gap-1.5">
-              <Label htmlFor="title">Title</Label>
-              <Input
-                id="title"
-                ref={titleRef}
-                placeholder="Title"
-                className="col-span-3"
-              />
+        <Dialog.Content>
+          <Dialog.Title>
+            <div className="flex justify-between align-top">
+              <span>Create Ticket</span>
+              <Dialog.Close>
+                <IconButton
+                  variant="ghost"
+                  radius="full"
+                  color="gray"
+                  size="3"
+                  asChild
+                >
+                  <X size={16} />
+                </IconButton>
+              </Dialog.Close>
             </div>
+          </Dialog.Title>
+          <Dialog.Description size="2" mb="4">
+            Enter ticket details
+          </Dialog.Description>
 
-            <div className="grid w-full gap-1.5">
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                placeholder="Enter details here"
-                id="description"
-                ref={bodyRef}
-              />
-            </div>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="flex flex-col gap-3">
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <Text
+                          className="flex gap-1"
+                          as="div"
+                          size="2"
+                          weight="bold"
+                        >
+                          Title
+                          <span className="text-red-600">*</span>
+                        </Text>
+                      </FormLabel>
+                      <FormControl>
+                        <TextField.Input placeholder="Title" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <div className="grid w-full gap-1.5">
-              <Label htmlFor="role">Assign To</Label>
-              <Select onValueChange={(val: string) => setEmployee(val)}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Unassigned" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {employeeData?.length > 0 ? (
-                      employeeData?.map((employee: Employee) => (
-                        //link by ID; explain {} v () in arrow funcs
-                        <SelectItem key={employee.id} value={employee.id}>
-                          {employee.name}
-                        </SelectItem>
-                      ))
-                    ) : (
-                      <SelectItem value="NO_USERS">No users found</SelectItem>
-                    )}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
+                <FormField
+                  control={form.control}
+                  name="content"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <Text
+                          className="flex gap-1"
+                          as="div"
+                          size="2"
+                          weight="bold"
+                        >
+                          Description
+                          <span className="text-red-600">*</span>
+                        </Text>
+                      </FormLabel>
+                      <FormControl>
+                        <TextArea
+                          size="3"
+                          placeholder="Add description"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <div className="grid w-full gap-1.5">
-              <Label htmlFor="role">Status</Label>
-              <Select
-                defaultValue={"open"}
-                onValueChange={(val: string) => setStatus(val)}
-              >
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Unassigned" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="open">Open</SelectItem>
-                    <SelectItem value="in_progress">In Progress</SelectItem>
-                    <SelectItem value="closed">Closed</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="grid w-full gap-1.5">
-              <Label htmlFor="role">Priority</Label>
-              <Select
-                defaultValue={"low"}
-                onValueChange={(val: string) => setPriority(val)}
-              >
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Unassigned" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="low">Low</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="high">High</SelectItem>
-                    <SelectItem value="critical">Critical</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="grid w-full gap-1.5">
-              <Label htmlFor="role">Category</Label>
-              <Select
-                defaultValue={"undefined"}
-                onValueChange={(val: string) => setCategory(val)}
-              >
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="N/A" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="undefined">Undefined</SelectItem>
-                    <SelectItem value="frontend">Frontend</SelectItem>
-                    <SelectItem value="backend">Backend</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          <DialogFooter>
-            <form onSubmit={handleSubmit}>
-              <DialogClose asChild>
-                <Button type="submit">Create</Button>
-              </DialogClose>
+                <FormField
+                  control={form.control}
+                  name="priority"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <Text
+                          className="flex gap-1"
+                          as="div"
+                          size="2"
+                          weight="bold"
+                        >
+                          Priority
+                          <span className="text-red-600">*</span>
+                        </Text>
+                      </FormLabel>
+                      <FormControl>
+                        <Select.Root onValueChange={field.onChange} {...field}>
+                          <Select.Trigger placeholder="Assign priority..." />
+                          <Select.Content>
+                            <Select.Item key="low" value="low">
+                              Low
+                            </Select.Item>
+                            <Select.Item key="medium" value="medium">
+                              Medium
+                            </Select.Item>
+                            <Select.Item key="high" value="high">
+                              High
+                            </Select.Item>
+                            <Select.Item key="critical" value="critical">
+                              Critical
+                            </Select.Item>
+                          </Select.Content>
+                        </Select.Root>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="status"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <Text
+                          className="flex gap-1"
+                          as="div"
+                          size="2"
+                          weight="bold"
+                        >
+                          Status
+                        </Text>
+                      </FormLabel>
+                      <FormControl>
+                        <Select.Root onValueChange={field.onChange} {...field}>
+                          <Select.Trigger placeholder="Assign status" />
+                          <Select.Content>
+                            {[...statusMap.entries()].map((entry) => (
+                              <Select.Item key={entry[0]} value={entry[0]}>
+                                {entry[1].value}
+                              </Select.Item>
+                            ))}
+                          </Select.Content>
+                        </Select.Root>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="category"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <Text
+                          className="flex gap-1"
+                          as="div"
+                          size="2"
+                          weight="bold"
+                        >
+                          Category
+                        </Text>
+                      </FormLabel>
+                      <FormControl>
+                        <Select.Root onValueChange={field.onChange} {...field}>
+                          <Select.Trigger placeholder="Assign category" />
+                          <Select.Content>
+                            <Select.Item key="undefined" value="undefined">
+                              None
+                            </Select.Item>
+                            {[...categoryMap.entries()].map((entry) => (
+                              <Select.Item key={entry[0]} value={entry[0]}>
+                                {entry[1].value}
+                              </Select.Item>
+                            ))}
+                          </Select.Content>
+                        </Select.Root>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="employeeId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <Text as="div" size="2" weight="bold">
+                          Assigned To
+                        </Text>
+                      </FormLabel>
+                      <FormControl>
+                        <Select.Root onValueChange={field.onChange} {...field}>
+                          <Select.Trigger
+                            placeholder="Assign"
+                            style={{
+                              paddingTop: "1.5rem",
+                              paddingBottom: "1.5rem",
+                            }}
+                          />
+                          <Select.Content className="py-5">
+                            <Select.Item className="py-5" key="" value="">
+                              <div className="flex max-w-fit items-center gap-3">
+                                <Avatar
+                                  radius="full"
+                                  size="2"
+                                  fallback={<div className="text-xs">N/A</div>}
+                                />
+                                <>Unassigned</>
+                              </div>
+                            </Select.Item>
+                            {employeesList?.map((employee) => (
+                              <Select.Item
+                                className="py-5"
+                                key={employee?.id}
+                                value={employee?.id}
+                              >
+                                <div className="flex max-w-fit items-center gap-3">
+                                  <Avatar
+                                    radius="full"
+                                    size="2"
+                                    src={employee.image as string}
+                                    fallback={
+                                      employee?.name
+                                        ?.charAt(0)
+                                        .toUpperCase() as string
+                                    }
+                                  />
+                                  <>{employee.name}</>
+                                </div>
+                              </Select.Item>
+                            ))}
+                          </Select.Content>
+                        </Select.Root>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="mt-4 flex flex-row justify-end gap-3">
+                {isValid ? (
+                  <Dialog.Close>
+                    <Button type="submit" color="green">
+                      Create
+                    </Button>
+                  </Dialog.Close>
+                ) : (
+                  <Button type="submit" color="green">
+                    Create
+                  </Button>
+                )}
+              </div>
             </form>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </Form>
+        </Dialog.Content>
+      </Dialog.Root>
     </div>
   );
 };

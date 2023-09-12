@@ -35,7 +35,10 @@ const TicketDetailsPage: NextPage = () => {
           </Dialog.Trigger>
 
           <Dialog.Content>
-            <EditTicketDialog ticketData={ticketData} />
+            {/* i think null checking prevents input filling bug? */}
+            {ticketData != null ? (
+              <EditTicketDialog ticketData={ticketData} />
+            ) : null}
           </Dialog.Content>
         </Dialog.Root>
       </div>
