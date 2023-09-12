@@ -1,4 +1,3 @@
-import { api } from "@/utils/api";
 import { Badge, Card, Code, Heading, Text, Avatar } from "@radix-ui/themes";
 import {
   categoryMap,
@@ -6,22 +5,15 @@ import {
   type badgeColor,
   statusMap,
 } from "@/lib/utils";
+import { type ticketWithEmployeeType } from "@/lib/prismaTypes";
 
 type TicketDetailsProps = {
-  ticketId: string;
+  ticketData: ticketWithEmployeeType;
 };
 
-const TicketDetails = ({ ticketId }: TicketDetailsProps) => {
-  const getTicket = api.ticket?.getTicket?.useQuery({
-    ticketId: ticketId,
-  });
-  const ticketData = getTicket?.data;
-
-  const getEmployee = api.employee?.getEmployee.useQuery({
-    employeeId: ticketData?.employeeId as string,
-  });
-  const employeeName: string = getEmployee?.data?.name as string;
-  const image: string = getEmployee?.data?.image as string;
+const TicketDetails = ({ ticketData }: TicketDetailsProps) => {
+  const employeeName: string = ticketData?.employee?.name as string;
+  const image: string = ticketData?.employee?.image as string;
 
   return (
     <Card size="3">
@@ -36,16 +28,15 @@ const TicketDetails = ({ ticketId }: TicketDetailsProps) => {
                 size="2"
                 radius="full"
                 color={
-                  priorityMap.get(ticketData?.priority as string)
-                    ?.color as badgeColor
+                  priorityMap.get(ticketData?.priority)?.color as badgeColor
                 }
               >
-                {priorityMap.get(ticketData?.priority as string)?.value}
+                {priorityMap.get(ticketData?.priority)?.value}
               </Badge>
             </div>
 
             <Text as="div" size="3" color="gray">
-              id: {ticketId}
+              id: {ticketData?.id}
             </Text>
 
             {ticketData?.category != "undefined" &&
@@ -64,7 +55,7 @@ const TicketDetails = ({ ticketId }: TicketDetailsProps) => {
           {/** top half - 2 */}
           <div className="flex flex-col gap-2">
             <Text as="div" size="3">
-              Status:{" "}
+              Status:
               <Code
                 variant="soft"
                 color={
@@ -84,11 +75,17 @@ const TicketDetails = ({ ticketId }: TicketDetailsProps) => {
                 <Avatar
                   src={image}
                   radius="full"
-                  fallback={employeeName?.charAt(0).toUpperCase()}
+                  fallback={
+                    ticketData?.employee ? (
+                      employeeName?.charAt(0).toUpperCase()
+                    ) : (
+                      <div className="text-xs">N/A</div>
+                    )
+                  }
                   color="indigo"
                   size="3"
                 />
-                {employeeName}
+                {ticketData?.employee ? employeeName : "Unassigned"}
               </>
             </div>
           </div>

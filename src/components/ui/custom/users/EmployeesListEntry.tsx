@@ -1,6 +1,7 @@
 "use client";
 
 import { type employeesWithTicketsType } from "@/lib/prismaTypes";
+import { api } from "@/utils/api";
 import {
   Card,
   Text,
@@ -18,7 +19,19 @@ type EmployeesListEntryProps = {
 };
 
 const EmployeesListEntry = ({ employee }: EmployeesListEntryProps) => {
+  const ctx = api.useContext();
   const { id, name, email, image, userRole, tickets } = employee;
+
+  const deleteEmployee = api.employee.delete.useMutation({
+    onSuccess: () => {
+      //.catch mandated by eslint
+      ctx.employee.getEmployees.invalidate().catch((err) => console.log(err));
+    },
+  });
+
+  const onDelete = (id: string) => {
+    deleteEmployee.mutate({ id });
+  };
 
   return (
     <Card size="2" asChild>
@@ -85,14 +98,23 @@ const EmployeesListEntry = ({ employee }: EmployeesListEntryProps) => {
               </Button>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content variant="solid">
-              <DropdownMenu.Item className="gap-1">
-                Edit
-                <Pencil size={15} />
+              <DropdownMenu.Item className="gap-1" asChild>
+                <Link href={`/users/${id}?edit=true`}>
+                  Edit
+                  <Pencil size={15} />
+                </Link>
               </DropdownMenu.Item>
               <DropdownMenu.Separator />
-              <DropdownMenu.Item className="gap-2" color="red">
-                Delete
-                <Trash2 size={16} />
+              <DropdownMenu.Item
+                className="flex gap-2"
+                color="red"
+                onClick={() => onDelete(id)}
+                asChild
+              >
+                <Link href="/users">
+                  Delete
+                  <Trash2 size={16} />
+                </Link>
               </DropdownMenu.Item>
             </DropdownMenu.Content>
           </DropdownMenu.Root>

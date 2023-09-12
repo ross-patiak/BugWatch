@@ -1,24 +1,49 @@
 import { type NextPage } from "next";
 import { useRouter } from "next/router";
 import TicketDetails from "@/components/ui/custom/tickets/TicketDetails";
-import { Button, Heading } from "@radix-ui/themes";
+import { Button, Heading, Dialog } from "@radix-ui/themes";
 import { Pencil } from "lucide-react";
+import EditTicketDialog from "@/components/ui/custom/tickets/EditTicketDialog";
+import { api } from "@/utils/api";
+import { type ticketWithEmployeeType } from "@/lib/prismaTypes";
+import Link from "next/link";
 
 const TicketDetailsPage: NextPage = () => {
   const router = useRouter();
-  const { id } = router.query;
+  //you can destructure all custom url params as well; returns undefined if DNE
+  const { id, edit } = router.query;
+
+  const getTicket = api.ticket?.getTicket?.useQuery({
+    ticketId: id as string,
+  });
+
+  const ticketData: ticketWithEmployeeType =
+    getTicket?.data as ticketWithEmployeeType;
 
   return (
     <div className="mx-7 my-7 flex flex-col">
       <div className="flex items-center justify-between pb-5">
         <Heading>Ticket Details</Heading>
-        <Button variant="surface" color="iris">
-          <Pencil size={15} />
-          Edit
-        </Button>
+        <Dialog.Root open={edit ? true : false}>
+          <Dialog.Trigger>
+            <Button variant="surface" color="iris" asChild>
+              <Link href={`/tickets/${id as string}?edit=true`}>
+                <Pencil size={15} />
+                Edit
+              </Link>
+            </Button>
+          </Dialog.Trigger>
+
+          <Dialog.Content>
+            {/* i think null checking prevents input filling bug? */}
+            {ticketData != null ? (
+              <EditTicketDialog ticketData={ticketData} />
+            ) : null}
+          </Dialog.Content>
+        </Dialog.Root>
       </div>
 
-      <TicketDetails ticketId={id as string} />
+      {id != null ? <TicketDetails ticketData={ticketData} /> : null}
     </div>
   );
 

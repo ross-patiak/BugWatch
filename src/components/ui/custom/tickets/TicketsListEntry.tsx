@@ -12,13 +12,26 @@ import { MoreVertical, Trash2, Pencil, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { categoryMap, type badgeColor, priorityMap } from "@/lib/utils";
 import { type ticketWithEmployeeType } from "@/lib/prismaTypes";
+import { api } from "@/utils/api";
 
 type TicketsListEntryProps = {
   ticket: ticketWithEmployeeType;
 };
 
 const TicketsListEntry = ({ ticket }: TicketsListEntryProps) => {
+  const ctx = api.useContext();
   const { id, title, category, priority, employee } = ticket;
+
+  const deleteTicket = api.ticket.delete.useMutation({
+    onSuccess: () => {
+      //.catch mandated by eslint
+      ctx.ticket.getTickets.invalidate().catch((err) => console.log(err));
+    },
+  });
+
+  const onDelete = (id: string) => {
+    deleteTicket.mutate({ id });
+  };
 
   return (
     <Card size="2" asChild>
@@ -63,12 +76,18 @@ const TicketsListEntry = ({ ticket }: TicketsListEntryProps) => {
                   <Avatar
                     src={employee?.image as string}
                     radius="full"
-                    fallback={employee?.name?.charAt(0).toUpperCase() as string}
+                    fallback={
+                      employee ? (
+                        (employee?.name?.charAt(0).toUpperCase() as string)
+                      ) : (
+                        <div className="text-xs">N/A</div>
+                      )
+                    }
                     color="indigo"
                     size="2"
                   />
                   <Text as="span" size="2">
-                    {employee?.name}
+                    {employee ? employee?.name : "Unassigned"}
                   </Text>
                 </>
               </div>
@@ -92,14 +111,23 @@ const TicketsListEntry = ({ ticket }: TicketsListEntryProps) => {
               </Button>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content variant="soft">
-              <DropdownMenu.Item className="gap-1">
-                Edit
-                <Pencil size={15} />
+              <DropdownMenu.Item className="gap-1" asChild>
+                <Link href={`/tickets/${id}?edit=true`}>
+                  Edit
+                  <Pencil size={15} />
+                </Link>
               </DropdownMenu.Item>
               <DropdownMenu.Separator />
-              <DropdownMenu.Item className="flex gap-2" color="red">
-                Delete
-                <Trash2 size={16} />
+              <DropdownMenu.Item
+                className="flex gap-2"
+                color="red"
+                onClick={() => onDelete(id)}
+                asChild
+              >
+                <Link href="/tickets">
+                  Delete
+                  <Trash2 size={16} />
+                </Link>
               </DropdownMenu.Item>
             </DropdownMenu.Content>
           </DropdownMenu.Root>

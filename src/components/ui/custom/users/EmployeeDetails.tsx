@@ -1,4 +1,3 @@
-import { api } from "@/utils/api";
 import {
   Badge,
   Card,
@@ -20,17 +19,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FolderKanban, Mail } from "lucide-react";
 
 type EmployeeDetailsProps = {
-  employeeId: string;
+  employeeData: employeesWithTicketsType;
 };
 
-const EmployeeDetails = ({ employeeId }: EmployeeDetailsProps) => {
-  const getEmployee = api.employee?.getEmployee.useQuery({
-    employeeId: employeeId,
-  });
-
-  const employeeData: employeesWithTicketsType =
-    getEmployee?.data as employeesWithTicketsType;
-
+const EmployeeDetails = ({ employeeData }: EmployeeDetailsProps) => {
   return (
     <div className="flex flex-row flex-wrap gap-8">
       {/* left half */}
@@ -52,6 +44,7 @@ const EmployeeDetails = ({ employeeId }: EmployeeDetailsProps) => {
             size="1"
             variant="surface"
             className="justify-center"
+            color={roleMap.get(employeeData?.userRole) as badgeColor}
             style={{ paddingTop: "8px", paddingBottom: "8px" }}
           >
             <Callout.Text
