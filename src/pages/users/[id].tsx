@@ -33,9 +33,11 @@ const UserDetailsPage: NextPage = () => {
               </Link>
             </Button>
           </Dialog.Trigger>
-
           <Dialog.Content>
-            <EditEmployeeDialog employeeData={employeeData} />
+            {/* i think null checking prevents input filling bug? */}
+            {employeeData != null ? (
+              <EditEmployeeDialog employeeData={employeeData} />
+            ) : null}
           </Dialog.Content>
         </Dialog.Root>
       </div>
