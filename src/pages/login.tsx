@@ -1,7 +1,7 @@
 import { Card, Button, Heading, Separator, Text } from "@radix-ui/themes";
-import { signOut, signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { DiscordLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
-const login = () => {
+const Login = () => {
   return (
     <div className="grid h-screen place-items-center">
       <Card size="2">
@@ -56,4 +56,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
