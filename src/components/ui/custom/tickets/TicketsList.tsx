@@ -20,12 +20,12 @@ const TicketsList = ({ data }: TicketsListProps) => {
 
   useEffect(() => {
     const filteredData = getTicketsByTitle?.data as ticketWithEmployeeType[];
-    if (filteredData?.length > 0) {
+    if (inputToSearch?.length > 0) {
       setDataToShow(filteredData);
     } else {
       setDataToShow(data);
     }
-  }, [data, getTicketsByTitle?.data]);
+  }, [data, inputToSearch, getTicketsByTitle?.data]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -42,7 +42,7 @@ const TicketsList = ({ data }: TicketsListProps) => {
       </div>
 
       <div className="grid grid-cols-4 gap-x-4 gap-y-4">
-        {dataToShow.map((ticket) => (
+        {dataToShow?.map((ticket) => (
           <TicketsListEntry key={ticket?.id} ticket={ticket} />
         ))}
       </div>
