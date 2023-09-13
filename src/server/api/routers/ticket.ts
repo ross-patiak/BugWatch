@@ -89,16 +89,24 @@ export const ticketRouter = createTRPCRouter({
   getTickets: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.ticket.findMany({
       include: {
-        employee: {
-          select: {
-            name: true,
-            image: true,
-          },
-        },
+        employee: true,
       },
       orderBy: { title: "desc" },
     });
   }),
+
+  getTicketsByTitle: protectedProcedure
+    .input(z.object({ input: z.string() }))
+    .query(async ({ input: { input }, ctx }) => {
+      return await ctx.prisma.ticket.findMany({
+        //MySQL case-insensitive by default
+        where: { title: { contains: input } },
+        include: {
+          employee: true,
+        },
+        orderBy: { title: "desc" },
+      });
+    }),
 
   getTicketsByStatus: protectedProcedure
     .input(

@@ -68,6 +68,18 @@ export const employeeRouter = createTRPCRouter({
       });
     }),
 
+  getEmployeesByName: protectedProcedure
+    .input(z.object({ input: z.string() }))
+    .query(async ({ input: { input }, ctx }) => {
+      return await ctx.prisma.employee.findMany({
+        //MySQL case-insensitive by default
+        where: { name: { contains: input } },
+        include: {
+          tickets: true,
+        },
+      });
+    }),
+
   getEmployees: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.employee.findMany({
       //TODO: maybe change the default orderBy (maybe by name but u gotta parse last names on the frontend before passing it to the back i think)
