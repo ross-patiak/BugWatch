@@ -1,7 +1,17 @@
 import { Card, Button, Heading, Separator, Text } from "@radix-ui/themes";
-import { signIn } from "next-auth/react";
 import { DiscordLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+import { type OAuthStrategy } from "@clerk/nextjs/dist/types/server";
+import { useSignIn } from "@clerk/nextjs";
 const Login = () => {
+  const { signIn } = useSignIn();
+
+  const signInWith = (strategy: OAuthStrategy) => {
+    return signIn?.authenticateWithRedirect({
+      strategy,
+      redirectUrl: "/tickets",
+      redirectUrlComplete: "/",
+    });
+  };
   return (
     <div className="grid h-screen place-items-center">
       <Card size="2">
@@ -15,7 +25,7 @@ const Login = () => {
                 style={{ height: "60px", width: "350px" }}
                 size="4"
                 variant="surface"
-                onClick={() => void signIn()}
+                onClick={() => void signInWith("oauth_discord")}
               >
                 Sign In as Demo User
               </Button>
@@ -31,7 +41,7 @@ const Login = () => {
                   style={{ height: "50px", width: "165px" }}
                   size="4"
                   variant="surface"
-                  onClick={() => void signIn()}
+                  onClick={() => void signInWith("oauth_discord")}
                 >
                   <DiscordLogoIcon />
                   Discord
@@ -42,7 +52,7 @@ const Login = () => {
                   style={{ height: "50px", width: "165px" }}
                   size="4"
                   variant="surface"
-                  onClick={() => void signIn()}
+                  onClick={() => void signInWith("oauth_github")}
                 >
                   <GitHubLogoIcon />
                   Github

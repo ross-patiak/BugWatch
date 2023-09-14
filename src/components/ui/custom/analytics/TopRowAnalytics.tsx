@@ -34,6 +34,11 @@ const numTicketsUnassigned = () => {
 };
 //TODO: fix responsive stretching of cards
 const TopRowAnalytics = () => {
+  const unassignedTickets = numTicketsUnassigned();
+  const openTickets = numTicketsByStatus("open");
+  const closedTickets = numTicketsByStatus("closed");
+  const inProgressTickets = numTicketsByStatus("in progress");
+
   return (
     <div className="flex flex-row flex-wrap justify-between gap-6">
       <Card
@@ -41,14 +46,19 @@ const TopRowAnalytics = () => {
         variant="classic"
       >
         <Flex className="px-3 py-1" direction="column">
-          <Text className="pb-2" as="div" size="2">
+          <Text
+            className="pb-2"
+            as="div"
+            size="2"
+            style={{ letterSpacing: "0.025em" }}
+          >
             Currently Open
           </Text>
 
           <Text as="div" size="7" weight="bold" align="left">
-            {numTicketsByStatus("open")}
+            {openTickets}
             <Text size="2" weight="regular" ml="1">
-              Tickets
+              {openTickets === 1 ? "Ticket" : "Tickets"}
             </Text>
           </Text>
         </Flex>
@@ -59,14 +69,19 @@ const TopRowAnalytics = () => {
         variant="classic"
       >
         <Flex className="px-3 py-1" direction="column">
-          <Text className="pb-2" as="div" size="2">
+          <Text
+            className="pb-2"
+            as="div"
+            size="2"
+            style={{ letterSpacing: "0.025em" }}
+          >
             Closed Today
           </Text>
 
           <Text as="div" size="7" weight="bold" align="left">
-            {numTicketsByStatus("closed")}
+            {closedTickets}
             <Text size="2" weight="regular" ml="1">
-              Tickets
+              {closedTickets === 1 ? "Ticket" : "Tickets"}
             </Text>
           </Text>
         </Flex>
@@ -77,14 +92,19 @@ const TopRowAnalytics = () => {
         variant="classic"
       >
         <Flex className="px-3 py-1" direction="column">
-          <Text className="pb-2" as="div" size="2">
+          <Text
+            className="pb-2"
+            as="div"
+            size="2"
+            style={{ letterSpacing: "0.025em" }}
+          >
             In Progress
           </Text>
 
           <Text as="div" size="7" weight="bold" align="left">
-            {numTicketsByStatus("in progress")}
+            {inProgressTickets}
             <Text size="2" weight="regular" ml="1">
-              Tickets
+              {inProgressTickets === 1 ? "Ticket" : "Tickets"}
             </Text>
           </Text>
         </Flex>
@@ -95,14 +115,19 @@ const TopRowAnalytics = () => {
         variant="classic"
       >
         <Flex className="px-3 py-1" direction="column">
-          <Text className="pb-2" as="div" size="2">
+          <Text
+            className="pb-2"
+            as="div"
+            size="2"
+            style={{ letterSpacing: "0.025em" }}
+          >
             Unassigned
           </Text>
 
           <Text as="div" size="7" weight="bold" align="left">
-            {numTicketsUnassigned()}
+            {unassignedTickets}
             <Text size="2" weight="regular" ml="1">
-              Tickets
+              {unassignedTickets === 1 ? "Ticket" : "Tickets"}
             </Text>
           </Text>
         </Flex>
