@@ -43,15 +43,19 @@ const CategoryTicketsPieChart = ({ className }: PieChartProps) => {
 
   return (
     <Card size="2" className={cn(className, "flex")}>
-      <Title>Open Tickets By Category</Title>
-      <DonutChart
-        className="mt-6"
-        data={data}
-        category="count"
-        index="name"
-        colors={["slate", "violet", "indigo"]}
-        variant="pie"
-      />
+      <div className="flex grow flex-col items-center gap-7 py-1">
+        <Title className="self-start pl-3 text-lg tracking-wide">
+          Open Tickets By Category
+        </Title>
+        <DonutChart
+          className="m-0 h-[300px] w-[300px] self-center"
+          data={data}
+          category="count"
+          index="name"
+          colors={["slate", "blue", "yellow"]}
+          variant="pie"
+        />
+      </div>
     </Card>
   );
 };

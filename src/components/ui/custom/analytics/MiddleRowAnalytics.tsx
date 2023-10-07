@@ -43,22 +43,26 @@ const MiddleRowAnalytics = () => {
   ];
 
   return (
-    <div className="flex flex-row justify-between">
-      <div className="mr-5 basis-[65%]">
+    <div className="flex flex-row flex-wrap justify-between gap-5">
+      <div className="min-w-[65%]">
         <Card size="2">
-          <Title>Tickets By Priority</Title>
-          <BarChart
-            className="mt-6"
-            data={chartdata}
-            index="name"
-            categories={["Number of Tickets"]}
-            colors={["blue"]}
-            yAxisWidth={48}
-            allowDecimals={false}
-          />
+          <div className="flex flex-col py-1">
+            <Title className="pl-4 text-lg tracking-wide">
+              Tickets By Priority
+            </Title>
+            <BarChart
+              className="mt-4"
+              data={chartdata}
+              index="name"
+              categories={["Number of Tickets"]}
+              colors={["blue"]}
+              yAxisWidth={48}
+              allowDecimals={false}
+            />
+          </div>
         </Card>
       </div>
-      <CategoryTicketsPieChart className="basis-[35%]" />
+      <CategoryTicketsPieChart className="max-w-[35%] grow" />
     </div>
   );
 };

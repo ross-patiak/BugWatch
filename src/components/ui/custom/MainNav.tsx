@@ -1,12 +1,11 @@
-import { signOut, signIn, useSession } from "next-auth/react";
 import { Button, Text } from "@radix-ui/themes";
 import { DarkModeToggle } from "@/components/ui/custom/DarkModeToggle";
 import { Bug } from "lucide-react";
+import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 
 export function MainNav() {
-  const session = useSession();
-  const user = session.data?.user;
+  const user = useUser();
 
   return (
     <div className="flex justify-center px-[20px] py-[15px]">
@@ -24,14 +23,14 @@ export function MainNav() {
 
           {/* secondary nav */}
           <div className="flex items-center space-x-2">
-            {user != null ? (
-              <Button variant="surface" onClick={() => void signOut()}>
-                Sign Out
-              </Button>
+            {user.isSignedIn ? (
+              <SignOutButton>
+                <Button variant="surface">Sign Out</Button>
+              </SignOutButton>
             ) : (
-              <Button variant="surface" onClick={() => void signIn()}>
-                Sign In
-              </Button>
+              <SignInButton>
+                <Button variant="surface">Sign In</Button>
+              </SignInButton>
             )}
             <DarkModeToggle />
           </div>
