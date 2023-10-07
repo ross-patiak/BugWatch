@@ -13,7 +13,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <ClerkProvider {...pageProps}>
       <Head>
-        <title>Bug Watchr</title>
+        <title>BugWatch</title>
         <meta
           name="description"
           content="This is a Bug Ticket Tracking Application"

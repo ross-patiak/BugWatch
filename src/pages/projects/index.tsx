@@ -1,4 +1,4 @@
-import { Heading } from "@radix-ui/themes";
+import { Heading, Text, Link } from "@radix-ui/themes";
 import Image from "next/image";
 
 import { type NextPage } from "next";
@@ -7,9 +7,22 @@ const ProjectsPage: NextPage = () => {
   return (
     <div className="mx-7 my-7 flex-col">
       <div className="flex flex-col items-center justify-center gap-14 pb-5">
-        <Heading size="7" style={{ letterSpacing: "0.025em" }}>
-          UNDER CONSTRUCTION
-        </Heading>
+        <div className="flex flex-col items-center">
+          <Heading size="7" style={{ letterSpacing: "0.025em" }}>
+            UNDER CONSTRUCTION
+          </Heading>
+          <Text as="div" color="gray">
+            See its progress{" "}
+            <Link
+              href="https://rosspatiak.notion.site/rosspatiak/bugwatch-scrum-board-bc8a5541b06246ba99d4e9229002fbc8"
+              target="_blank"
+            >
+              here
+            </Link>
+            !
+          </Text>
+        </div>
+
         <Image
           src="/assets/under_construction.jpg"
           width={500}
