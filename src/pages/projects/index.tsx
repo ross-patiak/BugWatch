@@ -14,7 +14,7 @@ const ProjectsPage: NextPage = () => {
           <Text as="div" color="gray">
             See its progress{" "}
             <Link
-              href="https://rosspatiak.notion.site/rosspatiak/bugwatch-scrum-board-bc8a5541b06246ba99d4e9229002fbc8"
+              href="https://bugwatch.notion.site/bugwatch-scrum-board-bc8a5541b06246ba99d4e9229002fbc8?pvs=4"
               target="_blank"
             >
               here

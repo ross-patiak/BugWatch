@@ -35,7 +35,7 @@ const Home: NextPage = () => {
               <AlertCircle size={20} /> This app is currently undergoing
               development. Check out dev progress{" "}
               <Link
-                href="https://rosspatiak.notion.site/rosspatiak/bugwatch-scrum-board-bc8a5541b06246ba99d4e9229002fbc8"
+                href="https://bugwatch.notion.site/bugwatch-scrum-board-bc8a5541b06246ba99d4e9229002fbc8?pvs=4"
                 target="_blank"
               >
                 here
