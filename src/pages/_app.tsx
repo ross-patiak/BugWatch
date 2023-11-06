@@ -8,6 +8,7 @@ import { MainNav } from "@/components/ui/custom/MainNav";
 import { SideNav } from "@/components/ui/custom/SideNav";
 import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
+import { Toaster } from "@/components/ui/toaster";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
@@ -31,6 +32,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
 
               <div className="min-h-screen flex-grow basis-[83%] rounded bg-[#F4F4F4] dark:bg-[#111315]">
                 <Component {...pageProps} />
+                <Toaster />
               </div>
             </div>
           </main>

@@ -13,6 +13,7 @@ import Link from "next/link";
 import { categoryMap, type badgeColor, priorityMap } from "@/lib/utils";
 import { type ticketWithEmployeeType } from "@/lib/prismaTypes";
 import { api } from "@/utils/api";
+import { useToast } from "@/components/ui/use-toast";
 
 type TicketsListEntryProps = {
   ticket: ticketWithEmployeeType;
@@ -21,11 +22,16 @@ type TicketsListEntryProps = {
 const TicketsListEntry = ({ ticket }: TicketsListEntryProps) => {
   const ctx = api.useContext();
   const { id, title, category, priority, employee } = ticket;
+  const { toast } = useToast();
 
   const deleteTicket = api.ticket.delete.useMutation({
     onSuccess: () => {
       //.catch mandated by eslint
       ctx.ticket.getTickets.invalidate().catch((err) => console.log(err));
+
+      toast({
+        title: "Delete Success",
+      });
     },
   });
 

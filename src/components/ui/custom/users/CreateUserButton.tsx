@@ -20,6 +20,7 @@ import * as z from "zod";
 import { api } from "@/utils/api";
 import { UserPlus, X } from "lucide-react";
 import { roleMap } from "@/lib/utils";
+import { useToast } from "@/components/ui/use-toast";
 
 const getImage = async () => {
   const response = await fetch("https://randomuser.me/api");
@@ -30,10 +31,16 @@ const getImage = async () => {
 
 const CreateUserButton = () => {
   const ctx = api.useContext();
+  const { toast } = useToast();
+
   const createUser = api.employee.create.useMutation({
     onSuccess: () => {
       //.catch mandated by eslint
       ctx.employee.getEmployees.invalidate().catch((err) => console.log(err));
+
+      toast({
+        title: "User Created",
+      });
     },
   });
 
@@ -76,6 +83,8 @@ const CreateUserButton = () => {
       image: image,
       userRole: userRole,
     });
+
+    form.reset();
   };
 
   /* eslint-disable @typescript-eslint/no-misused-promises*/
