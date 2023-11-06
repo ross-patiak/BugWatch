@@ -20,6 +20,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useToast } from "@/components/ui/use-toast";
 
 import { X } from "lucide-react";
 import { roleMap } from "@/lib/utils";
@@ -46,18 +47,27 @@ const FormSchema = z.object({
 const EditEmployeeDialog = ({ employeeData }: EditEmployeeDialogProps) => {
   const ctx = api.useContext();
   const router = useRouter();
+  const { toast } = useToast();
 
   const updateEmployee = api.employee.updateUser.useMutation({
     onSuccess: () => {
       //.catch mandated by eslint
       ctx.employee.getEmployee.invalidate().catch((err) => console.log(err));
+
+      toast({
+        title: "Details Saved",
+      });
     },
   });
 
-  const deleteEmployee = api.ticket.delete.useMutation({
+  const deleteEmployee = api.employee.delete.useMutation({
     onSuccess: () => {
       //.catch mandated by eslint
       ctx.employee.getEmployees.invalidate().catch((err) => console.log(err));
+
+      toast({
+        title: "Delete Success",
+      });
     },
   });
 
@@ -82,6 +92,8 @@ const EditEmployeeDialog = ({ employeeData }: EditEmployeeDialogProps) => {
       email: email,
       userRole: userRole,
     });
+
+    form.reset();
   };
 
   const onDelete = (id: string) => {

@@ -27,6 +27,7 @@ import { type Employee } from "@prisma/client";
 import { X } from "lucide-react";
 import { categoryMap, statusMap } from "@/lib/utils";
 import Link from "next/link";
+import { useToast } from "@/components/ui/use-toast";
 
 type EditTicketProps = {
   ticketData: ticketWithEmployeeType;
@@ -49,12 +50,17 @@ const FormSchema = z.object({
 const EditTicketDialog = ({ ticketData }: EditTicketProps) => {
   const ctx = api.useContext();
   const router = useRouter();
+  const { toast } = useToast();
 
   const getEmployees = api.employee.getEmployees.useQuery();
   const updateTicket = api.ticket.updateTicket.useMutation({
     onSuccess: () => {
       //.catch mandated by eslint
       ctx.ticket.getTicket.invalidate().catch((err) => console.log(err));
+
+      toast({
+        title: "Details Saved",
+      });
     },
   });
 
@@ -62,6 +68,10 @@ const EditTicketDialog = ({ ticketData }: EditTicketProps) => {
     onSuccess: () => {
       //.catch mandated by eslint
       ctx.ticket.getTickets.invalidate().catch((err) => console.log(err));
+
+      toast({
+        title: "Delete Success",
+      });
     },
   });
 
@@ -94,6 +104,8 @@ const EditTicketDialog = ({ ticketData }: EditTicketProps) => {
       employeeId: employeeId as string,
       category: category as string,
     });
+
+    form.reset();
   };
 
   const onDelete = (id: string) => {

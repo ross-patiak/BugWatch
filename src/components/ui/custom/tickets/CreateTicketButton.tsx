@@ -22,17 +22,22 @@ import * as z from "zod";
 import { api } from "@/utils/api";
 import { Plus, X } from "lucide-react";
 import { categoryMap, statusMap } from "@/lib/utils";
+import { useToast } from "@/components/ui/use-toast";
 
 const CreateTicketButton = () => {
   const ctx = api.useContext();
-  const getEmployees = api.employee.getEmployees.useQuery();
+  const { toast } = useToast();
 
+  const getEmployees = api.employee.getEmployees.useQuery();
   const employeesList = getEmployees?.data;
 
   const createTicket = api.ticket.create.useMutation({
     onSuccess: () => {
       //.catch mandated by eslint
       ctx.ticket.getTickets.invalidate().catch((err) => console.log(err));
+      toast({
+        title: "Ticket Created",
+      });
     },
   });
 
@@ -76,6 +81,8 @@ const CreateTicketButton = () => {
       status: status as string,
       employeeId: employeeId as string,
     });
+
+    form.reset();
   };
 
   /* eslint-disable @typescript-eslint/no-misused-promises*/

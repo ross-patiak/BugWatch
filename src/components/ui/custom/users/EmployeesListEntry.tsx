@@ -13,6 +13,7 @@ import {
 } from "@radix-ui/themes";
 import { FolderKanban, Mail, MoreVertical, Trash2, Pencil } from "lucide-react";
 import Link from "next/link";
+import { useToast } from "@/components/ui/use-toast";
 
 type EmployeesListEntryProps = {
   employee: employeesWithTicketsType;
@@ -21,11 +22,15 @@ type EmployeesListEntryProps = {
 const EmployeesListEntry = ({ employee }: EmployeesListEntryProps) => {
   const ctx = api.useContext();
   const { id, name, email, image, userRole, tickets } = employee;
+  const { toast } = useToast();
 
   const deleteEmployee = api.employee.delete.useMutation({
     onSuccess: () => {
       //.catch mandated by eslint
       ctx.employee.getEmployees.invalidate().catch((err) => console.log(err));
+      toast({
+        title: "Delete Success",
+      });
     },
   });
 
