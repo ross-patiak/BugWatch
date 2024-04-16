@@ -12,7 +12,7 @@ const TicketsPage: NextPage = () => {
 
   return (
     <div className="mx-7 my-7 flex-col">
-      <div className="flex items-center justify-between pb-5">
+      <div className="flex items-center justify-between pb-9">
         <Heading size="7">Tickets List</Heading>
         <CreateTicketButton />
       </div>

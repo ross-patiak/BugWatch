@@ -6,6 +6,7 @@ import { Search } from "lucide-react";
 import { type ticketWithEmployeeType } from "@/lib/prismaTypes";
 import { useEffect, useState } from "react";
 import { api } from "@/utils/api";
+import TicketFilter from "./TicketFilter";
 
 type TicketsListProps = {
   data: ticketWithEmployeeType[];
@@ -29,12 +30,14 @@ const TicketsList = ({ data }: TicketsListProps) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="self-end">
+      <div className="flex justify-between">
+        <TicketFilter />
+
         <TextField.Root>
           <TextField.Slot>
             <Search size={16} />
           </TextField.Slot>
-          <TextField.Input
+          <TextField.Root
             placeholder="Search tickets"
             onChange={(e) => setInputToSearch(e.target.value)}
           />
