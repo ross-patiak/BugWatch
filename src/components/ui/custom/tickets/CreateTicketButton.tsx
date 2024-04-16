@@ -228,7 +228,7 @@ const CreateTicketButton = () => {
                       </FormLabel>
                       <FormControl>
                         <Select.Root onValueChange={field.onChange} {...field}>
-                          <Select.Trigger placeholder="Assign status" />
+                          <Select.Trigger />
                           <Select.Content>
                             {[...statusMap.entries()].map((entry) => (
                               <Select.Item key={entry[0]} value={entry[0]}>
