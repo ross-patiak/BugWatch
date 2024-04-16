@@ -213,7 +213,7 @@ const EditTicketDialog = ({ ticketData }: EditTicketProps) => {
                   </FormLabel>
                   <FormControl>
                     <Select.Root onValueChange={field.onChange} {...field}>
-                      <Select.Trigger placeholder="Assign priority..." />
+                      <Select.Trigger />
                       <Select.Content>
                         <Select.Item key="low" value="low">
                           Low
@@ -251,7 +251,7 @@ const EditTicketDialog = ({ ticketData }: EditTicketProps) => {
                   </FormLabel>
                   <FormControl>
                     <Select.Root onValueChange={field.onChange} {...field}>
-                      <Select.Trigger placeholder="Assign status" />
+                      <Select.Trigger />
                       <Select.Content>
                         {[...statusMap.entries()].map((entry) => (
                           <Select.Item key={entry[0]} value={entry[0]}>
@@ -282,7 +282,7 @@ const EditTicketDialog = ({ ticketData }: EditTicketProps) => {
                   </FormLabel>
                   <FormControl>
                     <Select.Root onValueChange={field.onChange} {...field}>
-                      <Select.Trigger placeholder="Assign category" />
+                      <Select.Trigger />
                       <Select.Content>
                         <Select.Item key="undefined" value="undefined">
                           None
@@ -312,7 +312,6 @@ const EditTicketDialog = ({ ticketData }: EditTicketProps) => {
                   <FormControl>
                     <Select.Root onValueChange={field.onChange} {...field}>
                       <Select.Trigger
-                        placeholder="Assign"
                         style={{
                           paddingTop: "1.5rem",
                           paddingBottom: "1.5rem",

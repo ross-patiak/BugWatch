@@ -190,7 +190,7 @@ const CreateTicketButton = () => {
                       </FormLabel>
                       <FormControl>
                         <Select.Root onValueChange={field.onChange} {...field}>
-                          <Select.Trigger placeholder="Assign priority..." />
+                          <Select.Trigger />
                           <Select.Content>
                             <Select.Item key="low" value="low">
                               Low
@@ -259,7 +259,7 @@ const CreateTicketButton = () => {
                       </FormLabel>
                       <FormControl>
                         <Select.Root onValueChange={field.onChange} {...field}>
-                          <Select.Trigger placeholder="Assign category" />
+                          <Select.Trigger />
                           <Select.Content>
                             <Select.Item key="undefined" value="undefined">
                               None
@@ -289,7 +289,6 @@ const CreateTicketButton = () => {
                       <FormControl>
                         <Select.Root onValueChange={field.onChange} {...field}>
                           <Select.Trigger
-                            placeholder="Assign"
                             style={{
                               paddingTop: "1.5rem",
                               paddingBottom: "1.5rem",
